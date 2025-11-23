@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSiteImage } from "@/hooks/useSiteImage";
-import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
@@ -13,6 +13,7 @@ import { LocationSection } from "@/components/LocationSection";
 import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Input } from "@/components/ui/input";
 import earthNight from "@/assets/earth-night.jpg";
 import ofertaCapinhasHero from "@/assets/oferta-capinhas-hero.jpg";
 import samsungLogo from "@/assets/samsung-logo.jpeg";
@@ -87,6 +88,8 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   
   // Buscar imagens do banco de dados
   const { imageUrl: heroBanner } = useSiteImage("hero-banner", earthNight);
@@ -99,6 +102,15 @@ const Index = () => {
   const handleMenuClick = () => {
     setSelectedCategory("all");
     setSidebarOpen(true);
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      // Abrir sidebar com todas as categorias para buscar
+      setSelectedCategory("all");
+      setSidebarOpen(true);
+      setSearchOpen(false);
+    }
   };
 
   return (
@@ -126,15 +138,58 @@ const Index = () => {
           <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
         </motion.button>
         
-        <motion.button
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          onClick={() => navigate("/login")}
-          className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
-        >
-          Admin
-        </motion.button>
+        <div className="flex items-center gap-2">
+          {/* Search */}
+          {searchOpen ? (
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: "auto", opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              className="flex items-center gap-2"
+            >
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar produtos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                  className="pl-9 pr-4 py-2 w-48 sm:w-64 bg-card/60 backdrop-blur-xl border-border/50"
+                  autoFocus
+                />
+              </div>
+              <button
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchTerm("");
+                }}
+                className="p-2 rounded-xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all"
+              >
+                <X className="w-4 h-4 text-foreground" />
+              </button>
+            </motion.div>
+          ) : (
+            <motion.button
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              onClick={() => setSearchOpen(true)}
+              className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
+            >
+              <Search className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            </motion.button>
+          )}
+          
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            onClick={() => navigate("/login")}
+            className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
+          >
+            Admin
+          </motion.button>
+        </div>
       </header>
 
       {/* Main content */}

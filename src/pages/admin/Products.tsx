@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Loader2, Plus, Pencil, Trash2, Star, Package } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Star, Package, Search } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 interface Product {
@@ -50,6 +50,7 @@ export default function Products() {
   const [newBrandName, setNewBrandName] = useState("");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -240,7 +241,15 @@ export default function Products() {
   };
 
   const getProductsByBrand = (brand: string) => {
-    return products.filter(p => p.brand === brand);
+    const brandProducts = products.filter(p => p.brand === brand);
+    if (!searchTerm) return brandProducts;
+    
+    return brandProducts.filter(p => 
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.storage?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.color?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   };
 
   if (loading) {
@@ -256,17 +265,28 @@ export default function Products() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Catálogo de Produtos por Marca</h1>
             <p className="text-muted-foreground mt-2">
               Organize e gerencie produtos por fabricante
             </p>
           </div>
-          <Button size="lg" onClick={() => setBrandDialogOpen(true)}>
-            <Plus className="w-5 h-5 mr-2" />
-            Nova Marca
-          </Button>
+          <div className="flex gap-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Buscar produtos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9 w-64"
+              />
+            </div>
+            <Button size="lg" onClick={() => setBrandDialogOpen(true)}>
+              <Plus className="w-5 h-5 mr-2" />
+              Nova Marca
+            </Button>
+          </div>
         </div>
 
         {/* Seções por Marca */}
