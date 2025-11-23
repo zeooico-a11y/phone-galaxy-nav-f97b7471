@@ -61,6 +61,7 @@ export default function Products() {
     compatibility: "",
     product_type: "",
     price_text: "",
+    price: "",
     category_id: "",
     is_featured: false,
     is_active: true,
@@ -153,6 +154,7 @@ export default function Products() {
         compatibility: formData.compatibility || null,
         product_type: formData.product_type || null,
         price_text: formData.price_text || null,
+        price: formData.price ? parseFloat(formData.price) : null,
         category_id: formData.category_id,
         is_featured: formData.is_featured,
         is_active: formData.is_active,
@@ -214,6 +216,7 @@ export default function Products() {
       compatibility: product.compatibility || "",
       product_type: product.product_type || "",
       price_text: product.price_text || "",
+      price: "",
       category_id: product.category_id || "",
       is_featured: product.is_featured,
       is_active: product.is_active,
@@ -234,6 +237,7 @@ export default function Products() {
       compatibility: "",
       product_type: "",
       price_text: "",
+      price: "",
       category_id: "",
       is_featured: false,
       is_active: true,
@@ -527,14 +531,26 @@ export default function Products() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Preço</Label>
+                    <Label>Preço (numérico para ordenação) *</Label>
                     <Input
-                      value={formData.price_text}
-                      onChange={(e) => setFormData({ ...formData, price_text: e.target.value })}
-                      placeholder="Ex: R$ 6.999,00"
+                      type="number"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                      placeholder="Ex: 6999.00"
                       className="bg-background/50 border-border"
                     />
                   </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label>Preço (texto para exibição)</Label>
+                  <Input
+                    value={formData.price_text}
+                    onChange={(e) => setFormData({ ...formData, price_text: e.target.value })}
+                    placeholder="Ex: R$ 6.999,00"
+                    className="bg-background/50 border-border"
+                  />
                 </div>
 
                 <div className="space-y-2">
