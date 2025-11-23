@@ -147,6 +147,42 @@ const Index = () => {
       {/* Delivery steps */}
       <DeliverySteps />
 
+      {/* Oferta da semana card */}
+      <section className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          onClick={() => navigate("/oferta-da-semana")}
+          className="cursor-pointer group relative overflow-hidden rounded-3xl bg-gradient-to-r from-card/60 via-card/80 to-card/60 backdrop-blur-md border-2 border-primary/30 p-8 transition-all hover:border-primary hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] hover:scale-[1.02]"
+        >
+          {/* Decorative corners */}
+          <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-primary/50 rounded-tl-3xl" />
+          <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-primary/50 rounded-tr-3xl" />
+          <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-primary/50 rounded-bl-3xl" />
+          <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-primary/50 rounded-br-3xl" />
+          
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <div className="relative flex flex-col items-center gap-4 text-center">
+            <h2 className="text-3xl sm:text-4xl font-display font-black tracking-wider">
+              <span className="bg-gradient-chrome bg-clip-text text-transparent">
+                OFERTA DA SEMANA
+              </span>
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Promoções exclusivas só pelo WhatsApp
+            </p>
+            <div className="mt-2 px-6 py-2 rounded-full bg-primary/20 border border-primary/30">
+              <p className="text-sm font-semibold text-primary">
+                6 ofertas imperdíveis • Clique para ver →
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Location section */}
       <LocationSection />
 
