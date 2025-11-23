@@ -42,8 +42,12 @@ interface Category {
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [brandDialogOpen, setBrandDialogOpen] = useState(false);
+  const [newBrandName, setNewBrandName] = useState("");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -84,11 +88,46 @@ export default function Products() {
 
       setProducts(productsRes.data || []);
       setCategories(categoriesRes.data || []);
+      
+      // Extrair marcas únicas dos produtos
+      const uniqueBrands = Array.from(
+        new Set(
+          (productsRes.data || [])
+            .map(p => p.brand)
+            .filter((b): b is string => !!b)
+        )
+      ).sort();
+      setBrands(uniqueBrands);
     } catch (error: any) {
       toast.error("Erro ao carregar dados: " + error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddBrand = () => {
+    if (!newBrandName.trim()) {
+      toast.error("Nome da marca é obrigatório");
+      return;
+    }
+    
+    if (brands.includes(newBrandName.trim())) {
+      toast.error("Esta marca já existe");
+      return;
+    }
+    
+    setBrands([...brands, newBrandName.trim()].sort());
+    toast.success(`Marca "${newBrandName.trim()}" criada!`);
+    setNewBrandName("");
+    setBrandDialogOpen(false);
+  };
+
+  const handleOpenProductDialog = (brand: string | null = null) => {
+    setSelectedBrand(brand);
+    if (brand) {
+      setFormData({ ...formData, brand });
+    }
+    setDialogOpen(true);
   };
 
   const handleSave = async () => {
@@ -183,6 +222,7 @@ export default function Products() {
 
   const resetForm = () => {
     setEditingProduct(null);
+    setSelectedBrand(null);
     setFormData({
       name: "",
       description: "",
@@ -197,6 +237,10 @@ export default function Products() {
       is_featured: false,
       is_active: true,
     });
+  };
+
+  const getProductsByBrand = (brand: string) => {
+    return products.filter(p => p.brand === brand);
   };
 
   if (loading) {
@@ -214,27 +258,178 @@ export default function Products() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Catálogo Completo - Produtos</h1>
+            <h1 className="text-3xl font-bold text-foreground">Catálogo de Produtos por Marca</h1>
             <p className="text-muted-foreground mt-2">
-              Gerencie todos os produtos do catálogo por categoria
+              Organize e gerencie produtos por fabricante
             </p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={(open) => {
-            setDialogOpen(open);
-            if (!open) resetForm();
-          }}>
-            <DialogTrigger asChild>
-              <Button size="lg">
-                <Plus className="w-5 h-5 mr-2" />
-                Adicionar Produto
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-[#0B253A] border-primary/30 max-w-3xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle className="text-foreground text-xl">
-                  {editingProduct ? "Editar Produto" : "Novo Produto"}
-                </DialogTitle>
-              </DialogHeader>
+          <Button size="lg" onClick={() => setBrandDialogOpen(true)}>
+            <Plus className="w-5 h-5 mr-2" />
+            Nova Marca
+          </Button>
+        </div>
+
+        {/* Seções por Marca */}
+        <div className="space-y-6">
+          {brands.map((brand) => {
+            const brandProducts = getProductsByBrand(brand);
+            return (
+              <Card key={brand} className="bg-card/60 border-primary/30">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-2xl text-foreground">{brand}</CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {brandProducts.length} {brandProducts.length === 1 ? 'produto' : 'produtos'}
+                      </p>
+                    </div>
+                    <Button onClick={() => handleOpenProductDialog(brand)}>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Adicionar Produto {brand}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {brandProducts.length > 0 ? (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {brandProducts.map((product) => (
+                        <Card key={product.id} className="bg-background/40 border-border hover:border-primary/50 transition-all">
+                          <CardHeader>
+                            <div className="flex items-start gap-3">
+                              {product.image_url && (
+                                <img
+                                  src={product.image_url}
+                                  alt={product.name}
+                                  className="w-16 h-16 object-cover rounded-lg border border-primary/30"
+                                />
+                              )}
+                              {!product.image_url && (
+                                <div className="w-16 h-16 bg-muted/20 rounded-lg border border-border flex items-center justify-center">
+                                  <Package className="w-6 h-6 text-muted-foreground" />
+                                </div>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                  {product.is_featured && (
+                                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 flex-shrink-0" />
+                                  )}
+                                  <CardTitle className="text-foreground text-base truncate">
+                                    {product.name}
+                                  </CardTitle>
+                                </div>
+                                {product.categories && (
+                                  <p className="text-xs text-primary mt-1">{product.categories.name}</p>
+                                )}
+                                {product.storage && (
+                                  <p className="text-xs text-muted-foreground mt-1">{product.storage}</p>
+                                )}
+                              </div>
+                              <span
+                                className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
+                                  product.is_active
+                                    ? "bg-green-500/20 text-green-400"
+                                    : "bg-red-500/20 text-red-400"
+                                }`}
+                              >
+                                {product.is_active ? "Ativo" : "Inativo"}
+                              </span>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-3">
+                            {product.price_text && (
+                              <p className="text-lg font-bold text-primary">{product.price_text}</p>
+                            )}
+                            {product.description && (
+                              <p className="text-sm text-muted-foreground line-clamp-2">
+                                {product.description}
+                              </p>
+                            )}
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="flex-1"
+                                onClick={() => handleEdit(product)}
+                              >
+                                <Pencil className="w-3 h-3 mr-1" />
+                                Editar
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => setDeleteId(product.id)}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      Nenhum produto cadastrado para {brand}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+
+          {brands.length === 0 && (
+            <div className="text-center py-12">
+              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">Nenhuma marca cadastrada ainda</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Clique em "Nova Marca" para começar
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Dialog Nova Marca */}
+        <Dialog open={brandDialogOpen} onOpenChange={setBrandDialogOpen}>
+          <DialogContent className="bg-[#0B253A] border-primary/30">
+            <DialogHeader>
+              <DialogTitle className="text-foreground text-xl">Nova Marca</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Nome da Marca</Label>
+                <Input
+                  value={newBrandName}
+                  onChange={(e) => setNewBrandName(e.target.value)}
+                  placeholder="Ex: Apple, Samsung, Xiaomi"
+                  className="bg-background/50 border-border"
+                  onKeyPress={(e) => e.key === 'Enter' && handleAddBrand()}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleAddBrand} className="flex-1">
+                  Criar Marca
+                </Button>
+                <Button variant="outline" onClick={() => {
+                  setBrandDialogOpen(false);
+                  setNewBrandName("");
+                }}>
+                  Cancelar
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Dialog Produto */}
+        <Dialog open={dialogOpen} onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) resetForm();
+        }}>
+          <DialogContent className="bg-[#0B253A] border-primary/30 max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-foreground text-xl">
+                {editingProduct ? "Editar Produto" : `Novo Produto${selectedBrand ? ` - ${selectedBrand}` : ''}`}
+              </DialogTitle>
+            </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Categoria *</Label>
@@ -273,13 +468,22 @@ export default function Products() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Marca</Label>
-                    <Input
+                    <Label>Marca *</Label>
+                    <Select
                       value={formData.brand}
-                      onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                      placeholder="Ex: Apple, Samsung, Xiaomi"
-                      className="bg-background/50 border-border"
-                    />
+                      onValueChange={(value) => setFormData({ ...formData, brand: value })}
+                    >
+                      <SelectTrigger className="bg-background/50">
+                        <SelectValue placeholder="Selecione a marca" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#0B253A] border-primary/30">
+                        {brands.map((brand) => (
+                          <SelectItem key={brand} value={brand}>
+                            {brand}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
                     <Label>Cor Principal</Label>
@@ -383,93 +587,6 @@ export default function Products() {
               </div>
             </DialogContent>
           </Dialog>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <Card key={product.id} className="bg-card/40 border-primary/30 hover:border-primary/50 transition-all">
-              <CardHeader>
-                <div className="flex items-start gap-3">
-                  {product.image_url && (
-                    <img
-                      src={product.image_url}
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg border border-primary/30"
-                    />
-                  )}
-                  {!product.image_url && (
-                    <div className="w-16 h-16 bg-muted/20 rounded-lg border border-border flex items-center justify-center">
-                      <Package className="w-6 h-6 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      {product.is_featured && (
-                        <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 flex-shrink-0" />
-                      )}
-                      <CardTitle className="text-foreground text-base truncate">
-                        {product.name}
-                      </CardTitle>
-                    </div>
-                    {product.categories && (
-                      <p className="text-xs text-primary mt-1">{product.categories.name}</p>
-                    )}
-                    {product.storage && (
-                      <p className="text-xs text-muted-foreground mt-1">{product.storage}</p>
-                    )}
-                  </div>
-                  <span
-                    className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
-                      product.is_active
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-red-500/20 text-red-400"
-                    }`}
-                  >
-                    {product.is_active ? "Ativo" : "Inativo"}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {product.price_text && (
-                  <p className="text-lg font-bold text-primary">{product.price_text}</p>
-                )}
-                {product.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {product.description}
-                  </p>
-                )}
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => handleEdit(product)}
-                  >
-                    <Pencil className="w-3 h-3 mr-1" />
-                    Editar
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => setDeleteId(product.id)}
-                  >
-                    <Trash2 className="w-3 h-3" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-
-          {products.length === 0 && (
-            <div className="col-span-full text-center py-12">
-              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Nenhum produto cadastrado ainda</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Clique em "Adicionar Produto" para criar o primeiro
-              </p>
-            </div>
-          )}
-        </div>
       </div>
 
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
