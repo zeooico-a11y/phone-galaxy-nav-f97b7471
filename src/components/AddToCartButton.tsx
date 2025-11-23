@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -24,6 +25,7 @@ export function AddToCartButton({
   className,
 }: AddToCartButtonProps) {
   const { addItem } = useCart();
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
     addItem({
@@ -35,12 +37,13 @@ export function AddToCartButton({
       color: productColor,
       storage: productStorage,
     });
+    navigate("/checkout");
   };
 
   return (
     <Button onClick={handleAddToCart} className={className}>
       <ShoppingCart className="w-4 h-4 mr-2" />
-      Adicionar ao Carrinho
+      Comprar pelo WhatsApp
     </Button>
   );
 }
