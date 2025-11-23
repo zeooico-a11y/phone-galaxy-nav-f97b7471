@@ -9,6 +9,9 @@ interface Product {
   name: string;
   description: string;
   image?: string;
+  color?: string;
+  storage?: string;
+  price?: string;
 }
 
 interface CatalogListProps {
@@ -77,6 +80,9 @@ export function CatalogList({ title, products, whatsappNumber }: CatalogListProp
               name={product.name}
               description={product.description}
               image={product.image}
+              color={product.color}
+              storage={product.storage}
+              price={product.price}
               whatsappNumber={whatsappNumber}
               index={index}
             />
