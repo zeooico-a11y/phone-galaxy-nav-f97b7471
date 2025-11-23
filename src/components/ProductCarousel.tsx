@@ -32,9 +32,9 @@ export function ProductCarousel() {
     const fetchProducts = async () => {
       const { data } = await supabase
         .from("products")
-        .select("id, name, image_url, price_text")
+        .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
-        .order("name")
+        .order("price", { ascending: false, nullsFirst: false })
         .limit(20);
       
       if (data) setProducts(data);
@@ -55,7 +55,7 @@ export function ProductCarousel() {
         animate={{ opacity: 1, y: 0 }}
         className="text-xl sm:text-2xl font-bold text-foreground mb-6 text-center"
       >
-        Catálogo de Aparelhos
+        Catálogo de Produtos
       </motion.h2>
       
       {/* Navigation Arrows */}
