@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -8,28 +7,31 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import clienteEmerson from "@/assets/cliente-emerson.jpg";
+import clienteMarcelo from "@/assets/cliente-marcelo.jpg";
+import clienteEstephanie from "@/assets/cliente-estephanie.jpg";
+import clienteBruno from "@/assets/cliente-bruno.jpg";
 
 const testimonials = [
   {
     id: 1,
-    name: "João S",
-    text: "Entrega rápida em Paraguaçu!",
-    rating: 5,
-    avatar: "👨",
+    name: "Emerson",
+    image: clienteEmerson,
   },
   {
     id: 2,
-    name: "Maria P",
-    text: "Conserto perfeito no iPhone, ficou novo!",
-    rating: 5,
-    avatar: "👩",
+    name: "Marcelo",
+    image: clienteMarcelo,
   },
   {
     id: 3,
-    name: "Pedro L",
-    text: "Preços justos e ótimo atendimento.",
-    rating: 5,
-    avatar: "👨",
+    name: "Estephanie",
+    image: clienteEstephanie,
+  },
+  {
+    id: 4,
+    name: "Bruno",
+    image: clienteBruno,
   },
 ];
 
@@ -65,7 +67,7 @@ export function TestimonialsSection() {
           className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-wider text-center"
         >
           <span className="text-foreground">
-            Depoimentos Rápidos
+            Nossos Clientes
           </span>
         </motion.h2>
 
@@ -85,33 +87,25 @@ export function TestimonialsSection() {
           >
             <CarouselContent className="-ml-2 sm:-ml-4">
               {testimonials.map((testimonial, index) => (
-                <CarouselItem key={testimonial.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={testimonial.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                    className="flex flex-col items-center gap-6 rounded-2xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-8 transition-all hover:bg-card/60 hover:border-primary/30"
+                    className="flex flex-col items-center gap-4 rounded-3xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-6 transition-all hover:bg-card/60 hover:border-primary/30 hover:scale-105"
                   >
-                    {/* Avatar */}
-                    <div className="flex items-center justify-center w-20 h-20 rounded-full bg-muted/20 border-2 border-border/30 text-4xl">
-                      {testimonial.avatar}
+                    {/* Photo */}
+                    <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border-4 border-primary/20 shadow-lg">
+                      <img 
+                        src={testimonial.image} 
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover object-center"
+                      />
                     </div>
-
-                    {/* Stars */}
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                      ))}
-                    </div>
-
-                    {/* Text */}
-                    <p className="text-center text-sm sm:text-base text-foreground leading-relaxed">
-                      {testimonial.text}
-                    </p>
 
                     {/* Name */}
-                    <p className="text-sm text-muted-foreground italic">
-                      – {testimonial.name}
+                    <p className="text-lg font-bold text-foreground">
+                      {testimonial.name}
                     </p>
                   </motion.div>
                 </CarouselItem>
@@ -128,7 +122,7 @@ export function TestimonialsSection() {
             transition={{ delay: 0.8 }}
             className="mt-6 text-center text-xs text-muted-foreground sm:hidden"
           >
-            👈 Deslize para ver mais depoimentos 👉
+            👈 Deslize para ver mais clientes 👉
           </motion.p>
         </motion.div>
 
