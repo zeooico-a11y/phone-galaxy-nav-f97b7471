@@ -91,14 +91,23 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="mt-8 sm:mt-12 text-base sm:text-lg text-foreground/80 font-light"
+            className="mt-8 sm:mt-12 text-base sm:text-lg text-foreground font-light"
           >
-            Escolha seu celular, receba em casa
+            Celulares importados originais, com garantia e entrega rápida
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="mt-4 text-sm text-muted-foreground"
+          >
+            Toque em uma marca para ver os modelos disponíveis
           </motion.p>
         </motion.div>
 
         {/* Category cards */}
-        <div className="w-full max-w-2xl px-2 sm:px-4">
+        <div className="w-full max-w-2xl px-2 sm:px-4 space-y-6">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {categories.map((cat, index) => (
               <CategoryCard
@@ -106,10 +115,21 @@ const Index = () => {
                 icon={cat.icon}
                 label={cat.label}
                 onClick={() => handleCategoryClick(cat.id)}
-                delay={0.9 + index * 0.1}
+                delay={1.1 + index * 0.1}
               />
             ))}
           </div>
+
+          {/* Trust badge */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+            className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span>Envio para todo Brasil com rastreio</span>
+          </motion.div>
         </div>
 
         {/* Spacer for bottom spacing */}
