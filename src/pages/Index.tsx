@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Apple, Menu, MessageCircle, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
@@ -22,9 +22,16 @@ const XiaomiIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// Samsung S logo icon
+const SamsungIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3 15c-1.66 0-3-1.34-3-3V8.5c0-.28.22-.5.5-.5h2c.28 0 .5.22.5.5V14c0 .55.45 1 1 1s1-.45 1-1V8.5c0-.28.22-.5.5-.5h2c.28 0 .5.22.5.5V14c0 1.66-1.34 3-3 3zM9 17c-1.66 0-3-1.34-3-3V8.5c0-.28.22-.5.5-.5h2c.28 0 .5.22.5.5V14c0 .55.45 1 1 1s1-.45 1-1V8.5c0-.28.22-.5.5-.5h2c.28 0 .5.22.5.5V14c0 1.66-1.34 3-3 3z" />
+  </svg>
+);
+
 const categories = [
   { id: "iphone", label: "iPhone", icon: Apple, route: "/catalogo-iphone" },
-  { id: "samsung", label: "Samsung", icon: MessageCircle, route: "/catalogo-samsung" },
+  { id: "samsung", label: "Samsung", icon: SamsungIcon, route: "/catalogo-samsung" },
   { id: "xiaomi", label: "Xiaomi", icon: XiaomiIcon, route: "/catalogo-xiaomi" },
   { id: "peliculas", label: "Películas", icon: Shield, route: "/catalogo-peliculas" },
   { id: "capinhas", label: "Capinhas", icon: Smartphone, route: "/catalogo-capinhas" },
