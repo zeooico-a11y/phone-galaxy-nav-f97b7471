@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/ProductImage";
 
 interface Product {
   id: string;
@@ -133,19 +134,12 @@ export function SearchAutocomplete({ onClose }: SearchAutocompleteProps) {
                       "hover:bg-primary/10 hover:border-primary/30 border border-transparent"
                     )}
                   >
-                    <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-muted/20 overflow-hidden border border-border/30">
-                      {product.image_url ? (
-                        <img
-                          src={product.image_url}
-                          alt={product.name}
-                          className="w-full h-full object-contain p-1"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Search className="w-6 h-6 text-muted-foreground" />
-                        </div>
-                      )}
-                    </div>
+                    <ProductImage
+                      src={product.image_url}
+                      alt={product.name}
+                      containerClassName="w-16 h-16 flex-shrink-0 rounded-lg border border-border/30"
+                      className="w-full h-full object-contain p-1"
+                    />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-semibold text-foreground truncate">
                         {product.name}

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { ProductImage } from "@/components/ProductImage";
 
 interface ProductGridCardProps {
   id: string;
@@ -24,20 +25,17 @@ export function ProductGridCard({ id, name, price, image, tag }: ProductGridCard
       onClick={() => navigate(`/produto/${id}`)}
     >
       <Card className="overflow-hidden border-border/50 backdrop-blur-sm bg-card/80 hover:bg-card transition-all duration-300 h-full flex flex-col">
-        <div className="relative aspect-square overflow-hidden bg-muted/20">
-          <motion.img
-            src={image || "/placeholder.svg"}
-            alt={name}
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
-            whileHover={{ scale: 1.05 }}
-            loading="lazy"
-          />
-          {tag && (
-            <Badge className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm">
-              {tag}
-            </Badge>
-          )}
-        </div>
+        <ProductImage
+          src={image}
+          alt={name}
+          containerClassName="relative aspect-square"
+          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-300"
+        />
+        {tag && (
+          <Badge className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm z-10">
+            {tag}
+          </Badge>
+        )}
 
         <div className="p-4 flex-1 flex flex-col">
           <h3 className="font-bold text-foreground text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
