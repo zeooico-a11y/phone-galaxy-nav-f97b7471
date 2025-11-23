@@ -9,12 +9,14 @@ import {
 } from "@/components/ui/carousel";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
 
 interface Product {
   name: string;
   storage: string[];
   price: string;
   image?: string;
+  selectedStorage?: string;
 }
 
 interface ProductModalProps {
@@ -68,14 +70,15 @@ const categoryTitles: Record<string, string> = {
 
 export function ProductModal({ open, onOpenChange, category }: ProductModalProps) {
   const [selectedStorage, setSelectedStorage] = useState<Record<string, string>>({});
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
   const categoryProducts = category ? products[category] || [] : [];
   const categoryTitle = category ? categoryTitles[category] || "" : "";
 
   const handleWhatsApp = (product: Product, storage: string) => {
-    const message = `Oi, vim do app Master Phones. Quero o ${product.name} ${storage} por ${product.price}. Pode me passar as condições?`;
-    const phone = "5511999999999"; // Substituir pelo número real
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+    setSelectedProduct({ ...product, selectedStorage: storage });
+    setShowWhatsAppModal(true);
   };
 
   return (
@@ -144,6 +147,18 @@ export function ProductModal({ open, onOpenChange, category }: ProductModalProps
           <CarouselPrevious className="-left-4" />
           <CarouselNext className="-right-4" />
         </Carousel>
+
+        {/* WhatsApp Consult Modal */}
+        {selectedProduct && (
+          <WhatsAppConsultModal
+            open={showWhatsAppModal}
+            onOpenChange={setShowWhatsAppModal}
+            productName={selectedProduct.name}
+            productPrice={selectedProduct.price}
+            productStorage={selectedProduct.selectedStorage}
+            whatsappNumber="5511999999999"
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

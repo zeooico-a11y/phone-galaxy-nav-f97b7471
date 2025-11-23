@@ -12,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import earthNight from "@/assets/earth-night.jpg";
+import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
 
 interface Promotion {
   id: string;
@@ -32,6 +33,8 @@ export default function OfertaDaSemana() {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [loading, setLoading] = useState(true);
   const [bannerImage, setBannerImage] = useState<string | null>(null);
+  const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(null);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
   useEffect(() => {
     fetchPromotions();
@@ -85,33 +88,8 @@ export default function OfertaDaSemana() {
 
   const handleWhatsApp = (promo: Promotion) => {
     if (!promo.products) return;
-
-    let economia = "0";
-    if (promo.original_price) {
-      const original = parseFloat(promo.original_price.replace(/[^\d,]/g, '').replace(',', '.'));
-      const promotional = parseFloat(promo.promotional_price.replace(/[^\d,]/g, '').replace(',', '.'));
-      economia = (original - promotional).toFixed(2).replace('.', ',');
-    }
-    
-    const message = `⭐ *OFERTA DA SEMANA!*\n\n` +
-      `📱 *Produto:* ${promo.products.name}\n` +
-      `${promo.products.storage ? `💾 *Armazenamento:* ${promo.products.storage}\n` : ''}` +
-      `${promo.products.color ? `🎨 *Cor:* ${promo.products.color}\n` : ''}` +
-      `${promo.original_price ? `💰 *Preço Normal:* ${promo.original_price}\n` : ''}` +
-      `✨ *Preço Especial:* ${promo.promotional_price}\n` +
-      `${promo.original_price ? `💵 *Você economiza:* R$ ${economia}\n` : ''}` +
-      `${promo.highlight_text ? `\n🏷️ ${promo.highlight_text}\n` : ''}` +
-      `\n━━━━━━━━━━━━━━━━━\n` +
-      `🎁 *OFERTA VÁLIDA POR TEMPO LIMITADO!*\n\n` +
-      `Quero garantir essa oferta!\n` +
-      `Por favor, me confirme:\n` +
-      `• Disponibilidade em estoque\n` +
-      `• Condições de pagamento (à vista/parcelado)\n` +
-      `• Prazo de entrega\n` +
-      `• Garantia do produto`;
-    
-    const phone = "5535999366561";
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+    setSelectedPromotion(promo);
+    setShowWhatsAppModal(true);
   };
 
   if (loading) {
@@ -286,6 +264,19 @@ export default function OfertaDaSemana() {
             Aproveite agora! Ofertas válidas enquanto durarem os estoques.
           </motion.p>
         </motion.div>
+
+        {/* WhatsApp Consult Modal */}
+        {selectedPromotion?.products && (
+          <WhatsAppConsultModal
+            open={showWhatsAppModal}
+            onOpenChange={setShowWhatsAppModal}
+            productName={selectedPromotion.products.name}
+            productPrice={selectedPromotion.promotional_price}
+            productColor={selectedPromotion.products.color || undefined}
+            productStorage={selectedPromotion.products.storage || undefined}
+            whatsappNumber="5535999366561"
+          />
+        )}
       </main>
     </div>
   );

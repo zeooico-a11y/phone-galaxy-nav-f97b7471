@@ -3,6 +3,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Package, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
 
 interface Product {
   id: string;
@@ -31,18 +33,12 @@ export function SearchResultsModal({
   results, 
   searchTerm 
 }: SearchResultsModalProps) {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   
   const handleWhatsApp = (product: Product) => {
-    const message = `Olá! 👋\n\n` +
-      `Vi no site e gostaria de saber mais sobre:\n\n` +
-      `📱 *${product.name}*\n` +
-      `${product.storage ? `💾 ${product.storage}\n` : ''}` +
-      `${product.color ? `🎨 Cor: ${product.color}\n` : ''}` +
-      `${product.price_text ? `💰 ${product.price_text}\n` : ''}` +
-      `\nPoderia me enviar mais informações e valores?`;
-    
-    const phone = "5535999366561";
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+    setSelectedProduct(product);
+    setShowWhatsAppModal(true);
   };
 
   return (
@@ -140,6 +136,19 @@ export function SearchResultsModal({
             </div>
           )}
         </ScrollArea>
+
+        {/* WhatsApp Consult Modal */}
+        {selectedProduct && (
+          <WhatsAppConsultModal
+            open={showWhatsAppModal}
+            onOpenChange={setShowWhatsAppModal}
+            productName={selectedProduct.name}
+            productPrice={selectedProduct.price_text || undefined}
+            productColor={selectedProduct.color || undefined}
+            productStorage={selectedProduct.storage || undefined}
+            whatsappNumber="5535999366561"
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
