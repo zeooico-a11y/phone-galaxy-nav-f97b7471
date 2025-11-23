@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Wrench } from "lucide-react";
+import { ArrowLeft, Smartphone, Battery, Cable, Camera, Mic, Droplets } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import earthNight from "@/assets/earth-night.jpg";
@@ -7,33 +7,33 @@ import earthNight from "@/assets/earth-night.jpg";
 const services = [
   {
     name: "Troca de Tela",
-    description: "Substituição de tela quebrada ou com defeito para iPhone, Samsung e Xiaomi.",
-    details: "Tela original ou premium, com garantia de 90 dias.",
+    description: "Tela quebrada, trincada ou sem resposta ao toque",
+    icon: Smartphone,
   },
   {
     name: "Troca de Bateria",
-    description: "Bateria nova com capacidade original, melhora autonomia do aparelho.",
-    details: "Bateria de alta qualidade, instalação rápida e segura.",
+    description: "Bateria viciada, descarrega rápido ou celular desliga sozinho",
+    icon: Battery,
   },
   {
-    name: "Limpeza Completa",
-    description: "Limpeza interna e externa, remoção de poeira e resíduos.",
-    details: "Melhora desempenho e evita superaquecimento.",
+    name: "Troca de Conector de Carga",
+    description: "Celular não carrega ou cabo fica frouxo",
+    icon: Cable,
   },
   {
     name: "Reparo de Câmera",
-    description: "Conserto ou substituição de câmera frontal ou traseira.",
-    details: "Restaura qualidade de fotos e vídeos.",
+    description: "Câmera embaçada, não foca ou não abre",
+    icon: Camera,
   },
   {
-    name: "Formatação & Backup",
-    description: "Formatação completa, backup de dados e migração entre aparelhos.",
-    details: "Seus dados seguros e organizados.",
+    name: "Reparo de Áudio/Microfone",
+    description: "Ninguém te escuta nas ligações ou som não funciona",
+    icon: Mic,
   },
   {
-    name: "Reparo de Botões",
-    description: "Conserto de botões de volume, power e home que não respondem.",
-    details: "Testes completos após o reparo.",
+    name: "Limpeza Técnica (Oxidação)",
+    description: "Celular caiu na água ou apresenta oxidação",
+    icon: Droplets,
   },
 ];
 
@@ -41,17 +41,9 @@ export default function ServicosAssistencia() {
   const navigate = useNavigate();
 
   const handleWhatsApp = (service: typeof services[0]) => {
-    const message = `🔧 *AGENDAMENTO DE ASSISTÊNCIA TÉCNICA*\n\n` +
-      `📋 *Serviço desejado:* ${service.name}\n` +
-      `📝 *Descrição:* ${service.description}\n` +
-      `ℹ️ *Detalhes:* ${service.details}\n\n` +
-      `Gostaria de agendar este serviço.\n` +
-      `Por favor, me informe:\n` +
-      `• Disponibilidade de horários\n` +
-      `• Valor do serviço\n` +
-      `• Prazo estimado\n` +
-      `• Forma de pagamento`;
-    window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(message)}`, "_blank");
+    const message = `Olá! Gostaria de solicitar o serviço de ${service.name}.\n\n` +
+      `Aguardo retorno para mais informações sobre prazo e valores.`;
+    window.open(`https://wa.me/5535999366561?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
@@ -98,52 +90,50 @@ export default function ServicosAssistencia() {
           </p>
           
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground pt-4">
-            Serviços & Assistência Técnica
+            Escolha o serviço que você precisa
           </h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            Equipe especializada em iPhone, Samsung e Xiaomi. Todos os serviços com garantia.
+            Selecione o tipo de reparo e envie sua solicitação direto para nossa equipe
           </p>
         </motion.div>
 
-        {/* Services list */}
-        <div className="space-y-6">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 rounded-3xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-6 hover:bg-card/60 hover:border-primary/30 transition-all group"
-            >
-              {/* Icon */}
-              <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Wrench className="w-8 h-8 text-primary" />
-              </div>
+        {/* Services grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="group cursor-pointer flex flex-col items-center text-center gap-4 rounded-3xl bg-card/40 backdrop-blur-md border-2 border-primary/40 p-8 hover:bg-card/60 hover:border-primary/60 hover:-translate-y-1 transition-all hover:shadow-[0_0_30px_rgba(0,163,255,0.3)]"
+                onClick={() => handleWhatsApp(service)}
+              >
+                {/* Icon */}
+                <div className="flex-shrink-0 w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Icon className="w-10 h-10 text-primary" />
+                </div>
 
-              {/* Service info */}
-              <div className="flex-1 space-y-2">
-                <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                  {service.name}
-                </h3>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  {service.description}
-                </p>
-                <p className="text-xs text-muted-foreground/70">
-                  {service.details}
-                </p>
-              </div>
+                {/* Service info */}
+                <div className="space-y-3 flex-1">
+                  <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    {service.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
 
-              {/* WhatsApp button */}
-              <div className="flex-shrink-0 w-full sm:w-auto">
+                {/* Button */}
                 <Button
-                  onClick={() => handleWhatsApp(service)}
-                  className="w-full sm:w-auto bg-muted hover:bg-muted/80 text-foreground font-semibold px-6 py-6 rounded-full transition-all"
+                  className="w-full bg-primary/90 hover:bg-primary text-primary-foreground font-semibold rounded-full transition-all"
                 >
-                  Agendar no WhatsApp
+                  Solicitar este serviço
                 </Button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </main>
     </div>
