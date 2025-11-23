@@ -28,21 +28,42 @@ export function ProductCarousel() {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      // Lista de produtos a excluir do carrocel
+      const excludedProducts = [
+        'iPhone 15 Pro Max',
+        'iPhone 16 Pro',
+        'Galaxy S24 Ultra',
+        'Galaxy S24+',
+        'iPhone 15',
+        'iPhone 14',
+        'iPhone 13',
+        'iPhone 11'
+      ];
+
       const { data } = await supabase
         .from("products")
         .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
         .not("image_url", "is", null)
-        .limit(15);
+        .limit(50);
       
       if (data) {
-        // Filtrar produtos com imagens válidas e ordenar por preço
-        const validProducts = data.filter(p => p.image_url && p.image_url.trim() !== '');
-        const sortedProducts = [...validProducts].sort((a, b) => {
-          const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-          const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-          return priceB - priceA;
-        });
+        // Filtrar produtos excluídos e sem imagens válidas
+        const validProducts = data.filter(p => 
+          p.image_url && 
+          p.image_url.trim() !== '' &&
+          !excludedProducts.includes(p.name)
+        );
+        
+        // Ordenar por preço e limitar a 15 produtos
+        const sortedProducts = [...validProducts]
+          .sort((a, b) => {
+            const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+            const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+            return priceB - priceA;
+          })
+          .slice(0, 15);
+          
         setProducts(sortedProducts);
       }
     };
