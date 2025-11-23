@@ -299,6 +299,15 @@ const Index = () => {
 
       {/* WhatsApp floating button */}
       <WhatsAppButton />
+
+      {/* Footer signature */}
+      <footer className="relative z-10 w-full py-6 mt-12">
+        <div className="text-center">
+          <p className="text-xs sm:text-sm text-muted-foreground/60">
+            Feito por <span className="text-primary font-semibold">ZeLoks ilimitado</span>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
