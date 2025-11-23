@@ -3,8 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Package, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: string;
@@ -33,12 +32,11 @@ export function SearchResultsModal({
   results, 
   searchTerm 
 }: SearchResultsModalProps) {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
+  const navigate = useNavigate();
   
-  const handleWhatsApp = (product: Product) => {
-    setSelectedProduct(product);
-    setShowWhatsAppModal(true);
+  const handleProductClick = (productId: string) => {
+    navigate(`/produto/${productId}`);
+    onOpenChange(false);
   };
 
   return (
@@ -66,7 +64,8 @@ export function SearchResultsModal({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="group relative flex flex-col gap-3 rounded-2xl bg-background/60 backdrop-blur-md border border-border/50 p-4 transition-all hover:bg-background/80 hover:border-primary/50 hover:shadow-glow"
+                  className="group relative flex flex-col gap-3 rounded-2xl bg-background/60 backdrop-blur-md border border-border/50 p-4 transition-all hover:bg-background/80 hover:border-primary/50 hover:shadow-glow cursor-pointer"
+                  onClick={() => handleProductClick(product.id)}
                 >
                   {/* Product image */}
                   <div className="relative w-full aspect-square rounded-xl bg-muted/20 flex items-center justify-center overflow-hidden border border-border/30">
@@ -107,22 +106,13 @@ export function SearchResultsModal({
 
                     {product.description && (
                       <p className="text-xs text-muted-foreground line-clamp-2">
-                        {product.description}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* WhatsApp button */}
-                  <Button
-                    onClick={() => handleWhatsApp(product)}
-                    className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white"
-                    size="sm"
-                  >
-                    Consultar via WhatsApp
-                  </Button>
-                </motion.div>
-              ))}
-            </div>
+                      {product.description}
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <Package className="w-16 h-16 text-muted-foreground mb-4" />
@@ -136,19 +126,6 @@ export function SearchResultsModal({
             </div>
           )}
         </ScrollArea>
-
-        {/* WhatsApp Consult Modal */}
-        {selectedProduct && (
-          <WhatsAppConsultModal
-            open={showWhatsAppModal}
-            onOpenChange={setShowWhatsAppModal}
-            productName={selectedProduct.name}
-            productPrice={selectedProduct.price_text || undefined}
-            productColor={selectedProduct.color || undefined}
-            productStorage={selectedProduct.storage || undefined}
-            whatsappNumber="5535999366561"
-          />
-        )}
       </DialogContent>
     </Dialog>
   );

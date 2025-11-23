@@ -6,7 +6,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
 
 interface Product {
   id: string;
@@ -17,8 +16,6 @@ interface Product {
 
 export function ProductCarousel() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const navigate = useNavigate();
   
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -61,12 +58,6 @@ export function ProductCarousel() {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
-
-  const handleWhatsAppClick = (e: React.MouseEvent, product: Product) => {
-    e.stopPropagation();
-    setSelectedProduct(product);
-    setShowWhatsAppModal(true);
-  };
 
   if (products.length === 0) return null;
 
@@ -148,7 +139,10 @@ export function ProductCarousel() {
                   </p>
                 )}
                 <button 
-                  onClick={(e) => handleWhatsAppClick(e, product)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/produto/${product.id}`);
+                  }}
                   className="w-full py-2 px-4 rounded-xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all text-primary text-sm font-semibold"
                 >
                   Pedir no WhatsApp
@@ -158,17 +152,6 @@ export function ProductCarousel() {
           ))}
         </div>
       </div>
-
-      {/* WhatsApp Consult Modal */}
-      {selectedProduct && (
-        <WhatsAppConsultModal
-          open={showWhatsAppModal}
-          onOpenChange={setShowWhatsAppModal}
-          productName={selectedProduct.name}
-          productPrice={selectedProduct.price_text || undefined}
-          whatsappNumber="5511999999999"
-        />
-      )}
     </div>
   );
 }
