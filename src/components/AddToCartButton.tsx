@@ -3,8 +3,6 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useState } from "react";
-import { QuickWhatsAppBuyModal } from "@/components/QuickWhatsAppBuyModal";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -33,43 +31,29 @@ export function AddToCartButton({
 }: AddToCartButtonProps) {
   const { addItem } = useCart();
   const navigate = useNavigate();
-  const [showQuickBuyModal, setShowQuickBuyModal] = useState(false);
 
   const handleAddToCart = () => {
+    addItem({
+      id: productId,
+      name: productName,
+      price: productPrice,
+      priceText: productPriceText,
+      image: productImage,
+      color: productColor,
+      storage: productStorage,
+    });
+    
     if (redirectToCheckout) {
-      // Abrir modal de compra rápida pelo WhatsApp
-      setShowQuickBuyModal(true);
+      navigate("/checkout");
     } else {
-      // Adicionar ao carrinho normalmente
-      addItem({
-        id: productId,
-        name: productName,
-        price: productPrice,
-        priceText: productPriceText,
-        image: productImage,
-        color: productColor,
-        storage: productStorage,
-      });
       toast.success("Produto adicionado ao carrinho!");
     }
   };
 
   return (
-    <>
-      <Button onClick={handleAddToCart} variant={variant} className={className}>
-        <ShoppingCart className="w-4 h-4 mr-2" />
-        {redirectToCheckout ? "Comprar pelo WhatsApp" : "Adicionar ao Carrinho"}
-      </Button>
-
-      <QuickWhatsAppBuyModal
-        open={showQuickBuyModal}
-        onOpenChange={setShowQuickBuyModal}
-        productName={productName}
-        productPrice={productPriceText}
-        productColor={productColor}
-        productStorage={productStorage}
-        productImage={productImage}
-      />
-    </>
+    <Button onClick={handleAddToCart} variant={variant} className={className}>
+      <ShoppingCart className="w-4 h-4 mr-2" />
+      {redirectToCheckout ? "Comprar pelo WhatsApp" : "Adicionar ao Carrinho"}
+    </Button>
   );
 }
