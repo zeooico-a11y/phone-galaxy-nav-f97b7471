@@ -2,18 +2,20 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Truck, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useSiteImage } from "@/hooks/useSiteImage";
 import earthNight from "@/assets/earth-night.jpg";
 
 export default function QuemSomos() {
   const navigate = useNavigate();
+  const { imageUrl: bannerImage } = useSiteImage("quem-somos-banner", earthNight);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <img
-          src={earthNight}
-          alt="Earth at night"
+          src={bannerImage}
+          alt="Background"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
@@ -48,36 +50,43 @@ export default function QuemSomos() {
           <div className="rounded-3xl bg-card/40 backdrop-blur-md border border-border/50 p-8 sm:p-12 space-y-6">
             <p className="text-lg text-foreground/90 leading-relaxed">
               Somos especialistas em importação de celulares premium há mais de 5 anos, 
-              atendendo todo o Brasil com garantia e entrega segura.
+              trazendo os melhores aparelhos do mercado internacional diretamente para você.
             </p>
 
-            <p className="text-foreground/80 leading-relaxed">
-              Nossa missão é trazer até você os smartphones mais desejados do mundo, 
-              com procedência garantida, preços competitivos e atendimento personalizado.
+            <p className="text-lg text-foreground/90 leading-relaxed">
+              Nossa missão é oferecer produtos de altíssima qualidade com o melhor custo-benefício, 
+              sempre garantindo a procedência e autenticidade de cada aparelho. Trabalhamos com 
+              marcas líderes como Apple, Samsung e Xiaomi, além de uma linha completa de acessórios.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
-              <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-background/40">
-                <Shield className="w-12 h-12 text-primary" />
-                <h3 className="font-semibold text-foreground">Garantia</h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Produtos originais com garantia
+            <div className="grid sm:grid-cols-3 gap-6 mt-12">
+              <div className="flex flex-col items-center text-center space-y-3">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Shield className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground">Garantia</h3>
+                <p className="text-sm text-muted-foreground">
+                  Produtos com garantia de procedência e qualidade
                 </p>
               </div>
 
-              <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-background/40">
-                <Truck className="w-12 h-12 text-primary" />
-                <h3 className="font-semibold text-foreground">Entrega Rápida</h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Envio para todo Brasil com rastreio
+              <div className="flex flex-col items-center text-center space-y-3">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Truck className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground">Entrega</h3>
+                <p className="text-sm text-muted-foreground">
+                  Enviamos para todo Brasil com rastreamento
                 </p>
               </div>
 
-              <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-background/40">
-                <Award className="w-12 h-12 text-primary" />
-                <h3 className="font-semibold text-foreground">Experiência</h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Mais de 5 anos no mercado
+              <div className="flex flex-col items-center text-center space-y-3">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Award className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-foreground">Qualidade</h3>
+                <p className="text-sm text-muted-foreground">
+                  Seleção rigorosa de cada produto importado
                 </p>
               </div>
             </div>

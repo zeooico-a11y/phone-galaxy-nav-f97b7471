@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useSiteImage } from "@/hooks/useSiteImage";
 import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -86,6 +87,10 @@ const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  // Buscar imagens do banco de dados
+  const { imageUrl: heroBanner } = useSiteImage("hero-banner", earthNight);
+  const { imageUrl: heroDestaque } = useSiteImage("hero-destaque", ofertaIphonesHero);
 
   const handleCategoryClick = (route: string) => {
     navigate(route);
@@ -101,7 +106,7 @@ const Index = () => {
       {/* Background with image and overlay */}
       <div className="fixed inset-0 -z-10">
         <img
-          src={earthNight}
+          src={heroBanner}
           alt="Earth at night"
           className="w-full h-full object-cover"
         />
@@ -257,7 +262,7 @@ const Index = () => {
           {/* Background image */}
           <div className="absolute inset-0">
             <img 
-              src={ofertaIphonesHero} 
+              src={heroDestaque} 
               alt="Oferta da semana - Master Phones" 
               className="w-full h-full object-cover object-center"
             />
