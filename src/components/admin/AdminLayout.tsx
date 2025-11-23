@@ -12,7 +12,10 @@ import {
   LogOut,
   ExternalLink,
   Menu,
-  X
+  X,
+  Tag,
+  Image,
+  HelpCircle
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -70,10 +73,13 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
-    { icon: FileText, label: "Seções do Site", path: "/admin/sections" },
-    { icon: Package, label: "Produtos", path: "/admin/products" },
+    { icon: Package, label: "Catálogo - Produtos", path: "/admin/products" },
+    { icon: Tag, label: "Promoções / Ofertas", path: "/admin/promotions" },
     { icon: MessageSquare, label: "Depoimentos", path: "/admin/testimonials" },
-    { icon: Settings, label: "Configurações", path: "/admin/settings" },
+    { icon: Image, label: "Imagens do Site", path: "/admin/site-images" },
+    { icon: HelpCircle, label: "Perguntas Frequentes", path: "/admin/faq" },
+    { icon: FileText, label: "Seções do Site", path: "/admin/sections" },
+    { icon: Settings, label: "Configurações Gerais", path: "/admin/settings" },
   ];
 
   if (loading) {
