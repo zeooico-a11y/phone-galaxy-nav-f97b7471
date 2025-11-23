@@ -4,6 +4,7 @@ import { AddToCartButton } from "@/components/AddToCartButton";
 import { MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { WhatsAppConsultModal } from "@/components/WhatsAppConsultModal";
 
 interface ProductCardProps {
   id?: string;
@@ -30,20 +31,16 @@ export function ProductCard({
 }: ProductCardProps) {
   const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
   // Extrair valor numérico do preço
   const priceValue = price 
     ? parseFloat(price.replace(/[^\d,]/g, '').replace(',', '.')) || 0
     : 0;
 
-  const handleWhatsApp = () => {
-    let message = `👋 Olá! Vi o produto *${name}* no catálogo e gostaria de mais informações.\n\n`;
-    if (color) message += `🎨 *Cor:* ${color}\n`;
-    if (storage) message += `💾 *Armazenamento:* ${storage}\n`;
-    if (price) message += `💰 *Preço:* ${price}\n`;
-    message += `\nPoderia me informar sobre disponibilidade e formas de pagamento?`;
-    
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+  const handleWhatsApp = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowWhatsAppModal(true);
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -134,6 +131,17 @@ export function ProductCard({
           Consultar pelo WhatsApp
         </Button>
       </div>
+
+      {/* WhatsApp Consult Modal */}
+      <WhatsAppConsultModal
+        open={showWhatsAppModal}
+        onOpenChange={setShowWhatsAppModal}
+        productName={name}
+        productPrice={price}
+        productColor={color}
+        productStorage={storage}
+        whatsappNumber={whatsappNumber}
+      />
     </motion.div>
   );
 }
