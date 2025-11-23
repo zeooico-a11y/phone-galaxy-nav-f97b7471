@@ -154,42 +154,14 @@ export default function OfertaDaSemana() {
           transition={{ duration: 0.6 }}
           className="space-y-8 sm:space-y-12"
         >
-          {/* Title banner */}
-          <div className="flex flex-col items-center gap-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative px-8 sm:px-20 py-6 sm:py-8 rounded-3xl overflow-hidden"
-            >
-              {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 opacity-90 animate-gradient-x" />
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 via-transparent to-blue-400/30 animate-pulse" />
-              
-              {/* Glowing border */}
-              <div className="absolute inset-0 rounded-3xl border-4 border-white/30 shadow-[0_0_40px_rgba(255,255,255,0.5)]" />
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black tracking-wider text-center text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
-                  OFERTA DA SEMANA
-                </h1>
-              </div>
-              
-              {/* Corner accents */}
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-yellow-300 rounded-tl-2xl animate-pulse" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-yellow-300 rounded-tr-2xl animate-pulse" />
-              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-yellow-300 rounded-bl-2xl animate-pulse" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-yellow-300 rounded-br-2xl animate-pulse" />
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg font-semibold text-foreground text-center bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent"
-            >
+          {/* Title */}
+          <div className="text-center space-y-2">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black tracking-wider text-foreground">
+              OFERTA DA SEMANA
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground">
               ⚡ Promoções exclusivas só pelo WhatsApp ⚡
-            </motion.p>
+            </p>
           </div>
 
           {/* Carousel */}
@@ -203,7 +175,7 @@ export default function OfertaDaSemana() {
               <Carousel
                 opts={{
                   align: "start",
-                  loop: true,
+                  loop: false,
                 }}
                 className="w-full"
               >
