@@ -12,7 +12,7 @@ export function useSiteImage(imageKey: string, fallbackImage: string) {
           .from("site_images")
           .select("image_url")
           .eq("image_key", imageKey)
-          .single();
+          .maybeSingle();
 
         if (data?.image_url && !error) {
           setImageUrl(data.image_url);
