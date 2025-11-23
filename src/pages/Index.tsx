@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSiteImage } from "@/hooks/useSiteImage";
+import { supabase } from "@/integrations/supabase/client";
 import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
 import { ProductModal } from "@/components/ProductModal";
 import { ProductSidebar } from "@/components/ProductSidebar";
+import { SearchResultsModal } from "@/components/SearchResultsModal";
 import { ActionButtons } from "@/components/ActionButtons";
 import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
@@ -14,6 +16,7 @@ import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import earthNight from "@/assets/earth-night.jpg";
 import ofertaCapinhasHero from "@/assets/oferta-capinhas-hero.jpg";
 import samsungLogo from "@/assets/samsung-logo.jpeg";
@@ -83,6 +86,20 @@ const accessoryCategories = [
   },
 ];
 
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  storage: string | null;
+  color: string | null;
+  image_url: string | null;
+  brand: string | null;
+  price_text: string | null;
+  categories?: {
+    name: string;
+  } | null;
+}
+
 const Index = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -90,6 +107,9 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [searching, setSearching] = useState(false);
   
   // Buscar imagens do banco de dados
   const { imageUrl: heroBanner } = useSiteImage("hero-banner", earthNight);
@@ -104,12 +124,44 @@ const Index = () => {
     setSidebarOpen(true);
   };
 
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      // Abrir sidebar com todas as categorias para buscar
-      setSelectedCategory("all");
-      setSidebarOpen(true);
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      toast.error("Digite algo para buscar");
+      return;
+    }
+
+    setSearching(true);
+    
+    try {
+      const { data, error } = await supabase
+        .from("products")
+        .select(`
+          id,
+          name,
+          description,
+          storage,
+          color,
+          image_url,
+          brand,
+          price_text,
+          categories (
+            name
+          )
+        `)
+        .eq("is_active", true)
+        .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%,storage.ilike.%${searchTerm}%,color.ilike.%${searchTerm}%`)
+        .order("name");
+
+      if (error) throw error;
+
+      setSearchResults(data || []);
+      setSearchModalOpen(true);
       setSearchOpen(false);
+    } catch (error: any) {
+      console.error("Erro ao buscar produtos:", error);
+      toast.error("Erro ao buscar produtos");
+    } finally {
+      setSearching(false);
     }
   };
 
@@ -156,8 +208,16 @@ const Index = () => {
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   className="pl-9 pr-4 py-2 w-48 sm:w-64 bg-card/60 backdrop-blur-xl border-border/50"
                   autoFocus
+                  disabled={searching}
                 />
               </div>
+              <button
+                onClick={handleSearch}
+                disabled={searching}
+                className="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all disabled:opacity-50"
+              >
+                {searching ? "..." : "Buscar"}
+              </button>
               <button
                 onClick={() => {
                   setSearchOpen(false);
@@ -364,6 +424,14 @@ const Index = () => {
         open={sidebarOpen}
         onOpenChange={setSidebarOpen}
         selectedCategory={selectedCategory}
+      />
+
+      {/* Search results modal */}
+      <SearchResultsModal
+        open={searchModalOpen}
+        onOpenChange={setSearchModalOpen}
+        results={searchResults}
+        searchTerm={searchTerm}
       />
 
       {/* WhatsApp floating button */}
