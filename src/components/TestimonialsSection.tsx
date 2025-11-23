@@ -35,7 +35,16 @@ const testimonials = [
 
 export function TestimonialsSection() {
   const handleWhatsApp = () => {
-    const message = "Oi, vim do app Master Phones e quero falar com vocês";
+    const message = `👋 *Olá Master Phones!*\n\n` +
+      `Vi os depoimentos no app e fiquei interessado(a).\n\n` +
+      `Gostaria de saber mais sobre:\n` +
+      `• 📱 Modelos disponíveis\n` +
+      `• 💰 Formas de pagamento\n` +
+      `• 🚚 Prazos de entrega\n` +
+      `• 🛡️ Garantia dos produtos\n` +
+      `• 🔧 Serviços de assistência\n\n` +
+      `Podem me atender? 😊`;
+    
     const phone = "5535999366561";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };

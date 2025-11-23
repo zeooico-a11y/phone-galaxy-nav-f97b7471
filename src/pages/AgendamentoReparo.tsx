@@ -31,13 +31,19 @@ export default function AgendamentoReparo() {
       return;
     }
 
-    const message = `Oi, vim do app Master Phones e quero agendar assistência técnica.
-
-Nome: ${formData.nome}
-Celular: ${formData.celular}
-Modelo: ${formData.modelo}
-Problema: ${formData.problema}
-Cidade: ${formData.cidade}`;
+    const message = `🔧 *AGENDAMENTO - ASSISTÊNCIA TÉCNICA*\n\n` +
+      `👤 *Nome:* ${formData.nome}\n` +
+      `📱 *Celular:* ${formData.celular}\n` +
+      `📲 *Modelo do Aparelho:* ${formData.modelo}\n` +
+      `🏙️ *Cidade:* ${formData.cidade}\n\n` +
+      `⚠️ *Problema Relatado:*\n${formData.problema}\n\n` +
+      `━━━━━━━━━━━━━━━━━\n` +
+      `Gostaria de agendar este reparo.\n` +
+      `Por favor, me informe:\n` +
+      `• Horários disponíveis\n` +
+      `• Valor estimado\n` +
+      `• Prazo de reparo\n` +
+      `• Garantia do serviço`;
 
     const phone = "5511999999999";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");

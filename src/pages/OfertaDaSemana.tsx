@@ -60,7 +60,24 @@ export default function OfertaDaSemana() {
   const navigate = useNavigate();
 
   const handleWhatsApp = (oferta: typeof ofertas[0]) => {
-    const message = `Oi, vim do app Master Phones e quero aproveitar a Oferta da Semana: ${oferta.name} por ${oferta.promoPrice}`;
+    const economia = (parseFloat(oferta.originalPrice.replace('R$ ', '').replace('.', '')) - 
+                     parseFloat(oferta.promoPrice.replace('R$ ', '').replace('.', ''))).toFixed(0);
+    
+    const message = `⭐ *OFERTA DA SEMANA!*\n\n` +
+      `📱 *Produto:* ${oferta.name}\n` +
+      `💾 *Armazenamento:* ${oferta.storage}\n` +
+      `💰 *Preço Normal:* ${oferta.originalPrice}\n` +
+      `✨ *Preço Especial:* ${oferta.promoPrice}\n` +
+      `💵 *Você economiza:* R$ ${economia}\n\n` +
+      `━━━━━━━━━━━━━━━━━\n` +
+      `🎁 *OFERTA VÁLIDA POR TEMPO LIMITADO!*\n\n` +
+      `Quero garantir essa oferta!\n` +
+      `Por favor, me confirme:\n` +
+      `• Disponibilidade em estoque\n` +
+      `• Condições de pagamento (à vista/parcelado)\n` +
+      `• Prazo de entrega\n` +
+      `• Garantia do produto`;
+    
     const phone = "5511999999999";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
