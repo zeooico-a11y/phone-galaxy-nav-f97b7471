@@ -15,6 +15,7 @@ import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
 import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import earthNight from "@/assets/earth-night.jpg";
@@ -235,6 +236,9 @@ const Index = () => {
             Toque em uma marca para ver os modelos disponíveis
           </motion.p>
         </motion.div>
+
+        {/* Product Carousel */}
+        <ProductCarousel />
 
         {/* Action buttons */}
         <ActionButtons />
