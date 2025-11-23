@@ -120,6 +120,16 @@ const Index = () => {
         >
           <Menu className="w-5 h-5 text-foreground" />
         </motion.button>
+        
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          onClick={() => navigate("/login")}
+          className="px-4 py-2 rounded-full bg-primary/20 backdrop-blur-md border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-glow text-primary text-sm font-medium"
+        >
+          Admin
+        </motion.button>
       </header>
 
       {/* Main content */}
