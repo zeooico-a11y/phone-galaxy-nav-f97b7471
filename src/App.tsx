@@ -8,6 +8,7 @@ import QuemSomos from "./pages/QuemSomos";
 import AgendamentoReparo from "./pages/AgendamentoReparo";
 import OfertasDoDia from "./pages/OfertasDoDia";
 import OfertaDaSemana from "./pages/OfertaDaSemana";
+import PerguntasFrequentes from "./pages/PerguntasFrequentes";
 import CatalogoIPhone from "./pages/CatalogoIPhone";
 import CatalogoSamsung from "./pages/CatalogoSamsung";
 import CatalogoXiaomi from "./pages/CatalogoXiaomi";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/agendamento-reparo" element={<AgendamentoReparo />} />
           <Route path="/ofertas-do-dia" element={<OfertasDoDia />} />
           <Route path="/oferta-da-semana" element={<OfertaDaSemana />} />
+          <Route path="/perguntas-frequentes" element={<PerguntasFrequentes />} />
           <Route path="/catalogo-iphone" element={<CatalogoIPhone />} />
           <Route path="/catalogo-samsung" element={<CatalogoSamsung />} />
           <Route path="/catalogo-xiaomi" element={<CatalogoXiaomi />} />
