@@ -5,6 +5,9 @@ interface ProductCardProps {
   name: string;
   description: string;
   image?: string;
+  color?: string;
+  storage?: string;
+  price?: string;
   whatsappNumber?: string;
   index?: number;
 }
@@ -12,12 +15,18 @@ interface ProductCardProps {
 export function ProductCard({ 
   name, 
   description, 
-  image, 
+  image,
+  color,
+  storage,
+  price,
   whatsappNumber = "5511999999999",
   index = 0 
 }: ProductCardProps) {
   const handleWhatsApp = () => {
-    const message = `Oi, vim do app Master Phones e quero informações sobre o modelo ${name}`;
+    let message = `Oi, vim do app Master Phones e quero o ${name}`;
+    if (color) message += ` na cor ${color}`;
+    if (storage) message += ` ${storage}`;
+    message += ".";
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -42,9 +51,24 @@ export function ProductCard({
         <h3 className="text-xl sm:text-2xl font-bold text-foreground">
           {name}
         </h3>
+        {color && (
+          <p className="text-sm font-semibold text-primary">
+            Cor: {color}
+          </p>
+        )}
+        {storage && (
+          <p className="text-sm font-medium text-muted-foreground">
+            {storage}
+          </p>
+        )}
         <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
           {description}
         </p>
+        {price && (
+          <p className="text-lg sm:text-xl font-bold text-foreground">
+            {price}
+          </p>
+        )}
       </div>
 
       {/* WhatsApp button */}
