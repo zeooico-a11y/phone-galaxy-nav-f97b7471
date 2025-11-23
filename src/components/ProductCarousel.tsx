@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -23,9 +23,10 @@ export function ProductCarousel() {
       loop: true,
       align: "start",
       skipSnaps: false,
-      dragFree: true
+      dragFree: false,
+      containScroll: "trimSnaps"
     },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+    [Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]
   );
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export function ProductCarousel() {
         .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
         .order("price", { ascending: false, nullsFirst: false })
-        .limit(20);
+        .limit(15);
       
       if (data) setProducts(data);
     };
@@ -43,8 +44,13 @@ export function ProductCarousel() {
     fetchProducts();
   }, []);
 
-  const scrollPrev = () => emblaApi?.scrollPrev();
-  const scrollNext = () => emblaApi?.scrollNext();
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+  
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   if (products.length === 0) return null;
 
@@ -77,18 +83,15 @@ export function ProductCarousel() {
       
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex gap-4">
-          {products.map((product, index) => (
-            <motion.div
+          {products.map((product) => (
+            <div
               key={product.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
               className={cn(
                 "flex-[0_0_280px] min-w-0 cursor-pointer",
                 "bg-card/50 backdrop-blur-xl border-2 border-border/50",
                 "rounded-2xl p-6 hover:bg-card/70 hover:border-primary/30",
                 "hover:shadow-[0_0_20px_rgba(0,163,255,0.2)]",
-                "transition-all duration-300 group/card"
+                "transition-all duration-300"
               )}
               onClick={() => navigate(`/produto/${product.id}`)}
             >
@@ -98,8 +101,9 @@ export function ProductCarousel() {
                   <img
                     src={product.image_url}
                     alt={product.name}
-                    className="w-full h-full object-contain p-4 group-hover/card:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -110,7 +114,7 @@ export function ProductCarousel() {
 
               {/* Product Info */}
               <div className="text-center space-y-2">
-                <h3 className="font-bold text-foreground text-sm sm:text-base line-clamp-2 group-hover/card:text-primary transition-colors">
+                <h3 className="font-bold text-foreground text-sm sm:text-base line-clamp-2 hover:text-primary transition-colors">
                   {product.name}
                 </h3>
                 {product.price_text && (
@@ -122,7 +126,7 @@ export function ProductCarousel() {
                   Pedir no WhatsApp
                 </button>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
