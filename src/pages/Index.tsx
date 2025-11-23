@@ -10,6 +10,7 @@ import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
+import ofertaSemanaBanner from "@/assets/oferta-semana-banner.jpg";
 
 // Custom Xiaomi-style icon
 const XiaomiIcon = ({ className }: { className?: string }) => (
@@ -154,28 +155,39 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           onClick={() => navigate("/oferta-da-semana")}
-          className="cursor-pointer group relative overflow-hidden rounded-3xl bg-gradient-to-r from-card/60 via-card/80 to-card/60 backdrop-blur-md border-2 border-primary/30 p-8 transition-all hover:border-primary hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] hover:scale-[1.02]"
+          className="cursor-pointer group relative overflow-hidden rounded-3xl border-2 border-primary/30 transition-all hover:border-primary hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] hover:scale-[1.02]"
         >
+          {/* Background image */}
+          <div className="absolute inset-0">
+            <img 
+              src={ofertaSemanaBanner} 
+              alt="Oferta da semana" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-background/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/50" />
+          </div>
+
           {/* Decorative corners */}
-          <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-primary/50 rounded-tl-3xl" />
-          <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-primary/50 rounded-tr-3xl" />
-          <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-primary/50 rounded-bl-3xl" />
-          <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-primary/50 rounded-br-3xl" />
+          <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-primary/50 rounded-tl-3xl z-10" />
+          <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-primary/50 rounded-tr-3xl z-10" />
+          <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-primary/50 rounded-bl-3xl z-10" />
+          <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-primary/50 rounded-br-3xl z-10" />
           
           {/* Glow effect on hover */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
           
-          <div className="relative flex flex-col items-center gap-4 text-center">
-            <h2 className="text-3xl sm:text-4xl font-display font-black tracking-wider">
+          <div className="relative flex flex-col items-center gap-4 text-center p-8 sm:p-12 z-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-wider drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
               <span className="bg-gradient-chrome bg-clip-text text-transparent">
                 OFERTA DA SEMANA
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground">
+            <p className="text-sm sm:text-base text-foreground drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Promoções exclusivas só pelo WhatsApp
             </p>
-            <div className="mt-2 px-6 py-2 rounded-full bg-primary/20 border border-primary/30">
-              <p className="text-sm font-semibold text-primary">
+            <div className="mt-2 px-6 py-2 rounded-full bg-primary/30 backdrop-blur-sm border border-primary/50">
+              <p className="text-sm font-semibold text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 6 ofertas imperdíveis • Clique para ver →
               </p>
             </div>
