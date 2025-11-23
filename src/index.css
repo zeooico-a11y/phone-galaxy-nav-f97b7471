@@ -88,6 +88,16 @@ All colors MUST be HSL.
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Performance optimizations */
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+  }
+
+  /* Hardware acceleration for smooth animations */
+  img, video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -99,5 +109,30 @@ All colors MUST be HSL.
     button, a {
       -webkit-tap-highlight-color: rgba(0, 163, 255, 0.1);
     }
+    
+    /* Improve mobile scrolling performance */
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  /* Carousel performance optimizations */
+  .embla {
+    overflow: hidden;
+    will-change: transform;
+  }
+  
+  .embla__container {
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+  }
+  
+  .embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
   }
 }
