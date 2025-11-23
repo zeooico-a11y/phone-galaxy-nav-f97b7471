@@ -16,7 +16,9 @@ import {
   Tag,
   Image,
   HelpCircle,
-  ShoppingBag
+  ShoppingBag,
+  Ticket,
+  Star,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -77,6 +79,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     { icon: ShoppingBag, label: "Pedidos", path: "/admin/orders" },
     { icon: Package, label: "Catálogo - Produtos", path: "/admin/products" },
     { icon: Tag, label: "Promoções / Ofertas", path: "/admin/promotions" },
+    { icon: Ticket, label: "Cupons", path: "/admin/coupons" },
+    { icon: Star, label: "Avaliações", path: "/admin/reviews" },
     { icon: MessageSquare, label: "Depoimentos", path: "/admin/testimonials" },
     { icon: Image, label: "Imagens do Site", path: "/admin/site-images" },
     { icon: HelpCircle, label: "Perguntas Frequentes", path: "/admin/faq" },
