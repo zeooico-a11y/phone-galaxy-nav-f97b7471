@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { useState } from "react";
 
@@ -30,18 +29,6 @@ export function ProductCard({
   const priceValue = price 
     ? parseFloat(price.replace(/[^\d,]/g, '').replace(',', '.')) || 0
     : 0;
-
-  const handleWhatsApp = () => {
-    let message = `🛒 *PEDIDO DE PRODUTO*\n\n`;
-    message += `📱 *Produto:* ${name}\n`;
-    if (color) message += `🎨 *Cor:* ${color}\n`;
-    if (storage) message += `💾 *Armazenamento:* ${storage}\n`;
-    if (price) message += `💰 *Preço:* ${price}\n`;
-    message += `\n📝 *Descrição:* ${description}\n`;
-    message += `\n✅ Gostaria de saber mais informações sobre disponibilidade, formas de pagamento e prazo de entrega.`;
-    
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
-  };
 
   return (
     <motion.div
@@ -85,7 +72,7 @@ export function ProductCard({
       </div>
 
       {/* Action buttons */}
-      <div className="flex-shrink-0 w-full sm:w-auto flex flex-col gap-2">
+      <div className="flex-shrink-0 w-full sm:w-auto">
         {price && priceValue > 0 && (
           <AddToCartButton
             productId={`${name}-${color || 'default'}-${storage || 'default'}`}
@@ -98,13 +85,6 @@ export function ProductCard({
             className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 py-3 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl transition-all hover:shadow-[0_0_16px_rgba(0,163,255,0.5)] active:scale-95 text-sm sm:text-base"
           />
         )}
-        <Button
-          onClick={handleWhatsApp}
-          variant="outline"
-          className="w-full sm:w-auto font-semibold px-5 py-3 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl transition-all active:scale-95 text-sm sm:text-base"
-        >
-          Consultar no WhatsApp
-        </Button>
       </div>
     </motion.div>
   );
