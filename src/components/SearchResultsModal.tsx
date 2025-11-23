@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Package, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { ProductImage } from "@/components/ProductImage";
 
 interface Product {
   id: string;
@@ -68,17 +69,12 @@ export function SearchResultsModal({
                   onClick={() => handleProductClick(product.id)}
                 >
                   {/* Product image */}
-                  <div className="relative w-full aspect-square rounded-xl bg-muted/20 flex items-center justify-center overflow-hidden border border-border/30">
-                    {product.image_url ? (
-                      <img 
-                        src={product.image_url} 
-                        alt={product.name}
-                        className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <Package className="w-16 h-16 text-muted-foreground" />
-                    )}
-                  </div>
+                  <ProductImage
+                    src={product.image_url}
+                    alt={product.name}
+                    containerClassName="relative w-full aspect-square rounded-xl border border-border/30"
+                    className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                  />
 
                   {/* Product info */}
                   <div className="space-y-2 flex-1">

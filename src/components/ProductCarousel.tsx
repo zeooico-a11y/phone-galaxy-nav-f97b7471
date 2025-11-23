@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ProductImage } from "@/components/ProductImage";
 
 interface Product {
   id: string;
@@ -103,30 +104,12 @@ export function ProductCarousel() {
               onClick={() => navigate(`/produto/${product.id}`)}
             >
               {/* Product Image */}
-              <div className="aspect-square mb-4 rounded-xl bg-muted/20 overflow-hidden border border-border/30">
-                {product.image_url ? (
-                  <img
-                    src={product.image_url.startsWith('/src/') 
-                      ? product.image_url.replace('/src/assets/', '/assets/') 
-                      : product.image_url}
-                    alt={product.name}
-                    className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      if (!img.dataset.retried) {
-                        img.dataset.retried = 'true';
-                        img.src = product.image_url.replace('/assets/', '/src/assets/');
-                      }
-                    }}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">Imagem</span>
-                  </div>
-                )}
-              </div>
+              <ProductImage
+                src={product.image_url}
+                alt={product.name}
+                containerClassName="aspect-square mb-4 rounded-xl border border-border/30"
+                className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
+              />
 
               {/* Product Info */}
               <div className="text-center space-y-2">
