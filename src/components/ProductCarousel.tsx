@@ -32,6 +32,7 @@ export function ProductCarousel() {
       const excludedProducts = [
         'iPhone 15 Pro Max',
         'iPhone 16 Pro',
+        'iPhone 16 Pro Max',
         'Galaxy S24 Ultra',
         'Galaxy S24+',
         'iPhone 15',
