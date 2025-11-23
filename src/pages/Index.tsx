@@ -15,7 +15,6 @@ import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
 import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import earthNight from "@/assets/earth-night.jpg";
@@ -363,10 +362,6 @@ const Index = () => {
         onOpenChange={setSidebarOpen}
         selectedCategory={selectedCategory}
       />
-
-
-      {/* WhatsApp floating button */}
-      <WhatsAppButton />
 
       {/* Footer signature */}
       <footer className="relative z-10 w-full py-6 mt-12">
