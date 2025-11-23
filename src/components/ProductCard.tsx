@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { AddToCartButton } from "@/components/AddToCartButton";
+import { useState } from "react";
 
 interface ProductCardProps {
   name: string;
@@ -22,6 +24,13 @@ export function ProductCard({
   whatsappNumber = "5511999999999",
   index = 0 
 }: ProductCardProps) {
+  const [showButtons, setShowButtons] = useState(false);
+
+  // Extrair valor numérico do preço
+  const priceValue = price 
+    ? parseFloat(price.replace(/[^\d,]/g, '').replace(',', '.')) || 0
+    : 0;
+
   const handleWhatsApp = () => {
     let message = `🛒 *PEDIDO DE PRODUTO*\n\n`;
     message += `📱 *Produto:* ${name}\n`;
@@ -75,13 +84,26 @@ export function ProductCard({
         )}
       </div>
 
-      {/* WhatsApp button */}
-      <div className="flex-shrink-0 w-full sm:w-auto">
+      {/* Action buttons */}
+      <div className="flex-shrink-0 w-full sm:w-auto flex flex-col gap-2">
+        {price && priceValue > 0 && (
+          <AddToCartButton
+            productId={`${name}-${color || 'default'}-${storage || 'default'}`}
+            productName={name}
+            productPrice={priceValue}
+            productPriceText={price}
+            productImage={image}
+            productColor={color}
+            productStorage={storage}
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 py-3 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl transition-all hover:shadow-[0_0_16px_rgba(0,163,255,0.5)] active:scale-95 text-sm sm:text-base"
+          />
+        )}
         <Button
           onClick={handleWhatsApp}
-          className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 py-5 sm:px-6 sm:py-6 rounded-xl sm:rounded-2xl transition-all hover:shadow-[0_0_16px_rgba(0,163,255,0.5)] active:scale-95 text-sm sm:text-base"
+          variant="outline"
+          className="w-full sm:w-auto font-semibold px-5 py-3 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl transition-all active:scale-95 text-sm sm:text-base"
         >
-          Pedir no WhatsApp
+          Consultar no WhatsApp
         </Button>
       </div>
     </motion.div>
