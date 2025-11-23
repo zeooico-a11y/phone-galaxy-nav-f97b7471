@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -210,15 +211,12 @@ export default function Testimonials() {
                     className="bg-background/50 border-border"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>URL da Foto</Label>
-                  <Input
-                    value={formData.client_photo}
-                    onChange={(e) => setFormData({ ...formData, client_photo: e.target.value })}
-                    placeholder="https://..."
-                    className="bg-background/50 border-border"
-                  />
-                </div>
+                
+                <ImageUpload
+                  currentImage={formData.client_photo}
+                  onUploadComplete={(url) => setFormData({ ...formData, client_photo: url })}
+                  label="Foto do Cliente"
+                />
                 <div className="space-y-2">
                   <Label>Depoimento * (máx. 500 caracteres)</Label>
                   <Textarea
