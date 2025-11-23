@@ -21,10 +21,24 @@ interface SiteImage {
 
 const IMAGE_KEYS = [
   { key: "hero-banner", title: "Banner Principal / Home", description: "Imagem de fundo da página inicial" },
+  { key: "hero-destaque", title: "Imagem Destaque Home (Card)", description: "Imagem grande em destaque na home" },
   { key: "oferta-semana-banner", title: "Banner Oferta da Semana", description: "Banner principal da seção de ofertas" },
-  { key: "catalogo-header", title: "Cabeçalho do Catálogo", description: "Imagem de fundo do catálogo completo" },
-  { key: "sobre-nos-banner", title: "Banner Quem Somos", description: "Imagem da página sobre nós" },
+  { key: "ofertas-dia-banner", title: "Banner Ofertas do Dia", description: "Banner da página de ofertas diárias" },
+  { key: "catalogo-iphone", title: "Banner Catálogo iPhone", description: "Fundo da página de catálogo iPhone" },
+  { key: "catalogo-samsung", title: "Banner Catálogo Samsung", description: "Fundo da página de catálogo Samsung" },
+  { key: "catalogo-xiaomi", title: "Banner Catálogo Xiaomi", description: "Fundo da página de catálogo Xiaomi" },
+  { key: "catalogo-smartwatch", title: "Banner Catálogo Smartwatch", description: "Fundo da página de smartwatches" },
+  { key: "catalogo-peliculas", title: "Banner Catálogo Películas", description: "Fundo da página de películas" },
+  { key: "catalogo-capinhas", title: "Banner Catálogo Capinhas", description: "Fundo da página de capinhas" },
+  { key: "catalogo-carregadores", title: "Banner Catálogo Carregadores", description: "Fundo da página de carregadores" },
+  { key: "catalogo-fones", title: "Banner Catálogo Fones", description: "Fundo da página de fones" },
+  { key: "catalogo-powerbank", title: "Banner Catálogo Power Bank", description: "Fundo da página de power banks" },
+  { key: "catalogo-acessorios", title: "Banner Catálogo Acessórios", description: "Fundo da página de acessórios" },
+  { key: "quem-somos-banner", title: "Banner Quem Somos", description: "Imagem da página sobre nós" },
   { key: "assistencia-banner", title: "Banner Assistência", description: "Imagem da página de serviços" },
+  { key: "agendamento-banner", title: "Banner Agendamento", description: "Imagem da página de agendamento de reparo" },
+  { key: "faq-banner", title: "Banner Perguntas Frequentes", description: "Imagem da página de FAQ" },
+  { key: "logo-principal", title: "Logo Principal", description: "Logo da loja (cabeçalho e rodapé)" },
 ];
 
 export default function SiteImages() {
