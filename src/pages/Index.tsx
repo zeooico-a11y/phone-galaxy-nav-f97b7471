@@ -154,13 +154,18 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           onClick={() => navigate("/")}
-          className="flex-1 max-w-md mx-2 sm:mx-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95 overflow-hidden"
+          className="flex-1 max-w-2xl mx-2 sm:mx-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95 overflow-hidden py-2 px-3"
         >
-          <img
-            src={masterPhonesLogo}
-            alt="Master Phones"
-            className="w-full h-12 sm:h-14 md:h-16 object-contain py-2"
-          />
+          <div className="flex items-center justify-center gap-3 sm:gap-4">
+            <img
+              src={masterPhonesLogo}
+              alt="Master Phones"
+              className="h-14 sm:h-16 md:h-20 w-auto object-contain flex-shrink-0"
+            />
+            <span className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide text-foreground whitespace-nowrap">
+              Master Phones Imports
+            </span>
+          </div>
         </motion.button>
         
         <div className="flex items-center gap-2 flex-shrink-0">
