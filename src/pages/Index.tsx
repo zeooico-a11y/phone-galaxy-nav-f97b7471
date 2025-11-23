@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Apple, Menu, MessageCircle, Package } from "lucide-react";
+import { Apple, Menu, MessageCircle, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
+import { CategoryListCard } from "@/components/CategoryListCard";
 import { ProductModal } from "@/components/ProductModal";
 import { ProductSidebar } from "@/components/ProductSidebar";
 import { ActionButtons } from "@/components/ActionButtons";
@@ -26,6 +27,45 @@ const categories = [
   { id: "samsung", label: "Samsung", icon: MessageCircle, route: "/catalogo-samsung" },
   { id: "xiaomi", label: "Xiaomi", icon: XiaomiIcon, route: "/catalogo-xiaomi" },
   { id: "acessorios", label: "Acessórios", icon: Package, route: "/catalogo-acessorios" },
+];
+
+const accessoryCategories = [
+  { 
+    title: "Películas & Proteção de Tela", 
+    description: "Películas 3D, privacidade e hidrogel para todas as marcas",
+    icon: Shield,
+    route: "/catalogo-peliculas" 
+  },
+  { 
+    title: "Capinhas & Cases", 
+    description: "Capinhas antishock, silicone e premium para iPhone, Samsung e Xiaomi",
+    icon: Smartphone,
+    route: "/catalogo-capinhas" 
+  },
+  { 
+    title: "Carregadores & Cabos", 
+    description: "Carregadores turbo originais e cabos de alta durabilidade",
+    icon: Zap,
+    route: "/catalogo-carregadores" 
+  },
+  { 
+    title: "Fones & Áudio", 
+    description: "Fones Bluetooth, caixinhas de som e mais áudio para o dia a dia",
+    icon: Headphones,
+    route: "/catalogo-fones" 
+  },
+  { 
+    title: "Power Bank & Energia", 
+    description: "Power banks e carregadores magnéticos para nunca ficar sem bateria",
+    icon: Battery,
+    route: "/catalogo-powerbank" 
+  },
+  { 
+    title: "Serviços & Assistência", 
+    description: "Serviços de assistência técnica e suporte especializado",
+    icon: Wrench,
+    route: "/servicos-assistencia" 
+  },
 ];
 
 const Index = () => {
@@ -146,6 +186,38 @@ const Index = () => {
         </div>
 
       </main>
+
+      {/* Accessory Categories Section */}
+      <section className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="space-y-6"
+        >
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+              Catálogo Completo
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Proteção, energia, áudio e serviços especializados
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {accessoryCategories.map((category, index) => (
+              <CategoryListCard
+                key={category.route}
+                title={category.title}
+                description={category.description}
+                route={category.route}
+                icon={category.icon}
+                index={index}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </section>
 
       {/* Delivery steps */}
       <DeliverySteps />
