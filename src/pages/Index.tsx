@@ -115,15 +115,15 @@ const Index = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-4 sm:px-6 pt-4 sm:pt-6">
+      <header className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-6">
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={handleMenuClick}
-          className="p-3 rounded-full bg-card/40 backdrop-blur-md border border-border/50 hover:bg-card/60 hover:border-primary/50 transition-all hover:shadow-glow"
+          className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
         >
-          <Menu className="w-5 h-5 text-foreground" />
+          <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
         </motion.button>
         
         <motion.button
@@ -131,28 +131,28 @@ const Index = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={() => navigate("/login")}
-          className="px-4 py-2 rounded-full bg-primary/20 backdrop-blur-md border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-glow text-primary text-sm font-medium"
+          className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
         >
           Admin
         </motion.button>
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 flex flex-col items-center px-4 sm:px-6 pb-8 pt-4">
+      <main className="relative z-10 flex flex-col items-center px-4 sm:px-8 lg:px-12 pb-12 pt-2">
         {/* Logo and tagline */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex flex-col items-center mt-8 sm:mt-16 text-center"
+          className="flex flex-col items-center mt-6 sm:mt-12 lg:mt-16 text-center"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-[0.15em] sm:tracking-[0.2em] leading-tight">
-            <span className="bg-gradient-chrome bg-clip-text text-transparent drop-shadow-[0_4px_12px_rgba(255,255,255,0.3)]">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-[0.12em] sm:tracking-[0.18em] lg:tracking-[0.2em] leading-tight">
+            <span className="bg-gradient-chrome bg-clip-text text-transparent drop-shadow-[0_4px_16px_rgba(255,255,255,0.4)]">
               MASTER
             </span>
           </h1>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-[0.15em] sm:tracking-[0.2em] leading-tight -mt-2">
-            <span className="bg-gradient-chrome bg-clip-text text-transparent drop-shadow-[0_4px_12px_rgba(255,255,255,0.3)]">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-[0.12em] sm:tracking-[0.18em] lg:tracking-[0.2em] leading-tight -mt-1 sm:-mt-2">
+            <span className="bg-gradient-chrome bg-clip-text text-transparent drop-shadow-[0_4px_16px_rgba(255,255,255,0.4)]">
               PHONES
             </span>
           </h1>
@@ -160,7 +160,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-2 text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.35em] uppercase text-foreground/70 font-display"
+            className="mt-2 sm:mt-3 text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.35em] uppercase text-foreground/70 font-display"
           >
             Importados
           </motion.p>
@@ -169,7 +169,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="mt-8 sm:mt-12 text-base sm:text-lg text-foreground font-light"
+            className="mt-6 sm:mt-10 lg:mt-12 text-sm sm:text-base lg:text-lg text-foreground/90 font-light max-w-md"
           >
             Celulares importados originais, com garantia e entrega rápida
           </motion.p>
@@ -178,7 +178,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
-            className="mt-4 text-sm text-muted-foreground"
+            className="mt-3 sm:mt-4 text-xs sm:text-sm text-muted-foreground"
           >
             Toque em uma marca para ver os modelos disponíveis
           </motion.p>
@@ -188,8 +188,8 @@ const Index = () => {
         <ActionButtons />
 
         {/* Category cards */}
-        <div className="w-full max-w-3xl px-2 sm:px-4 space-y-6 mb-16">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="w-full max-w-3xl px-2 sm:px-4 space-y-6 sm:space-y-8 mb-12 sm:mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
             {categories.map((cat, index) => (
               <CategoryCard
                 key={cat.id}
@@ -206,10 +206,10 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground"
+            className="flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground px-4"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span>Envio para todo Brasil com rastreio</span>
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(0,163,255,0.6)]" />
+            <span className="text-center">Envio para todo Brasil com rastreio</span>
           </motion.div>
         </div>
 
