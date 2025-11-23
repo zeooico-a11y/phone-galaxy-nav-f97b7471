@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import brazilMap from "@/assets/brazil-map.jpg";
 
 export function LocationSection() {
   const handleWhatsAppParaguacu = () => {
@@ -42,56 +43,13 @@ export function LocationSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative mb-8 rounded-3xl overflow-hidden border border-border/50 bg-card/40 backdrop-blur-md"
+          className="relative mb-8 rounded-3xl overflow-hidden border border-border/50 shadow-2xl"
         >
-          {/* Placeholder for map image - replace with actual image */}
-          <div className="w-full aspect-video bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center relative">
-            {/* Tech grid background effect */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-40"></div>
-            
-            {/* Map pins */}
-            <div className="relative z-10 flex flex-col items-center gap-8">
-              <div className="flex items-center gap-12">
-                {/* Paraguaçu pin */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div className="relative">
-                    <MapPin className="w-12 h-12 text-primary animate-pulse" fill="currentColor" />
-                    <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl"></div>
-                  </div>
-                  <span className="text-sm font-semibold text-foreground bg-background/80 px-3 py-1 rounded-full">
-                    Paraguaçu
-                  </span>
-                </motion.div>
-
-                {/* Poço Fundo pin */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div className="relative">
-                    <MapPin className="w-12 h-12 text-primary animate-pulse" fill="currentColor" />
-                    <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl"></div>
-                  </div>
-                  <span className="text-sm font-semibold text-foreground bg-background/80 px-3 py-1 rounded-full">
-                    Poço Fundo
-                  </span>
-                </motion.div>
-              </div>
-
-              <p className="text-xs sm:text-sm text-muted-foreground text-center max-w-md">
-                Atendimento rápido para Paraguaçu e Poço Fundo pelo WhatsApp
-              </p>
-            </div>
-          </div>
+          <img
+            src={brazilMap}
+            alt="Mapa do Brasil - Área de atendimento Paraguaçu e Poço Fundo"
+            className="w-full h-auto object-cover"
+          />
         </motion.div>
 
         {/* Description text */}
