@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSiteImage } from "@/hooks/useSiteImage";
 import { supabase } from "@/integrations/supabase/client";
-import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram, ShoppingCart } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram, ShoppingCart, Home } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -137,15 +137,27 @@ const Index = () => {
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-6">
-        <motion.button
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          onClick={handleMenuClick}
-          className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
-        >
-          <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={() => navigate("/")}
+            className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
+          >
+            <Home className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          </motion.button>
+          
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            onClick={handleMenuClick}
+            className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
+          >
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+          </motion.button>
+        </div>
         
         <div className="flex items-center gap-2">
           {/* Search */}
