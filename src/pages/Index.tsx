@@ -6,6 +6,7 @@ import { ProductModal } from "@/components/ProductModal";
 import { ProductSidebar } from "@/components/ProductSidebar";
 import { ActionButtons } from "@/components/ActionButtons";
 import { DeliverySteps } from "@/components/DeliverySteps";
+import { LocationSection } from "@/components/LocationSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
 
@@ -144,6 +145,9 @@ const Index = () => {
 
       {/* Delivery steps */}
       <DeliverySteps />
+
+      {/* Location section */}
+      <LocationSection />
 
       {/* Product modal */}
       <ProductModal
