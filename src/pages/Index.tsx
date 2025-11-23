@@ -13,7 +13,7 @@ import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
-import ofertaSemanaHero from "@/assets/oferta-semana-hero.jpg";
+import ofertaIphonesHero from "@/assets/oferta-iphones-hero.jpg";
 import samsungLogo from "@/assets/samsung-logo.jpeg";
 
 // Custom Xiaomi-style icon
@@ -247,9 +247,9 @@ const Index = () => {
           {/* Background image */}
           <div className="absolute inset-0">
             <img 
-              src={ofertaSemanaHero} 
+              src={ofertaIphonesHero} 
               alt="Oferta da semana - Master Phones" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
             <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
