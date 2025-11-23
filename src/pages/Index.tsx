@@ -10,7 +10,7 @@ import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
-import ofertaSemanaBanner from "@/assets/oferta-semana-banner.jpg";
+import ofertaSemanaHero from "@/assets/oferta-semana-hero.jpg";
 
 // Custom Xiaomi-style icon
 const XiaomiIcon = ({ className }: { className?: string }) => (
@@ -160,12 +160,12 @@ const Index = () => {
           {/* Background image */}
           <div className="absolute inset-0">
             <img 
-              src={ofertaSemanaBanner} 
-              alt="Oferta da semana" 
+              src={ofertaSemanaHero} 
+              alt="Oferta da semana - Master Phones" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-background/80" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
           </div>
 
           {/* Decorative corners */}
@@ -178,16 +178,8 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
           
           <div className="relative flex flex-col items-center gap-4 text-center p-8 sm:p-12 z-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-wider drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-              <span className="bg-gradient-chrome bg-clip-text text-transparent">
-                OFERTA DA SEMANA
-              </span>
-            </h2>
-            <p className="text-sm sm:text-base text-foreground drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Promoções exclusivas só pelo WhatsApp
-            </p>
-            <div className="mt-2 px-6 py-2 rounded-full bg-primary/30 backdrop-blur-sm border border-primary/50">
-              <p className="text-sm font-semibold text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            <div className="mt-2 px-8 py-3 rounded-full bg-primary/30 backdrop-blur-sm border border-primary/50 group-hover:bg-primary/40 transition-all">
+              <p className="text-base sm:text-lg font-semibold text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 6 ofertas imperdíveis • Clique para ver →
               </p>
             </div>
