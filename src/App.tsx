@@ -21,6 +21,12 @@ import CatalogoPowerBank from "./pages/CatalogoPowerBank";
 import CatalogoSmartwatch from "./pages/CatalogoSmartwatch";
 import ServicosAssistencia from "./pages/ServicosAssistencia";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Dashboard from "./pages/admin/Dashboard";
+import Sections from "./pages/admin/Sections";
+import Products from "./pages/admin/Products";
+import Testimonials from "./pages/admin/Testimonials";
+import AdminSettings from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +54,12 @@ const App = () => (
           <Route path="/catalogo-powerbank" element={<CatalogoPowerBank />} />
           <Route path="/catalogo-smartwatch" element={<CatalogoSmartwatch />} />
           <Route path="/servicos-assistencia" element={<ServicosAssistencia />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin/sections" element={<Sections />} />
+          <Route path="/admin/products" element={<Products />} />
+          <Route path="/admin/testimonials" element={<Testimonials />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
