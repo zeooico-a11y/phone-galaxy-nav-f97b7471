@@ -14,7 +14,7 @@ export default function CatalogoDinamico() {
   const { categorySlug } = useParams();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("price_desc");
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -62,6 +62,9 @@ export default function CatalogoDinamico() {
         default:
           query = query.order("name", { ascending: true });
       }
+
+      // Limitar a 20 produtos
+      query = query.limit(20);
 
       const { data, error } = await query;
       if (error) throw error;
@@ -119,9 +122,9 @@ export default function CatalogoDinamico() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="name">Nome (A-Z)</SelectItem>
-                    <SelectItem value="price_asc">Menor Preço</SelectItem>
                     <SelectItem value="price_desc">Maior Preço</SelectItem>
+                    <SelectItem value="price_asc">Menor Preço</SelectItem>
+                    <SelectItem value="name">Nome (A-Z)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
