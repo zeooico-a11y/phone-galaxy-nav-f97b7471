@@ -172,7 +172,7 @@ export default function OfertaDaSemana() {
               {/* Content */}
               <div className="relative z-10">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black tracking-wider text-center text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
-                  🔥 OFERTA DA SEMANA 🔥
+                  OFERTA DA SEMANA
                 </h1>
               </div>
               
