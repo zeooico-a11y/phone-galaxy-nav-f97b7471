@@ -10,10 +10,9 @@ interface ProductImageProps {
 
 export function ProductImage({ src, alt, className, containerClassName }: ProductImageProps) {
   const [imageError, setImageError] = useState(false);
-  const [imageSrc, setImageSrc] = useState(src || "");
 
   // Garantir que o caminho está correto
-  const getCorrectPath = (path: string | null | undefined): string => {
+  const getImagePath = (path: string | null | undefined): string => {
     if (!path) return "/placeholder.svg";
     
     // Se começar com /src/assets/, corrigir para /assets/
@@ -30,34 +29,22 @@ export function ProductImage({ src, alt, className, containerClassName }: Produc
     return `/assets/${path}`;
   };
 
-  const handleError = () => {
-    if (!imageError) {
-      setImageError(true);
-      // Tentar caminho alternativo
-      const currentSrc = imageSrc;
-      if (currentSrc.startsWith('/assets/')) {
-        // Se falhou com /assets/, não tem mais fallback
-        setImageSrc("/placeholder.svg");
-      }
-    }
-  };
-
-  const finalSrc = getCorrectPath(imageError ? "/placeholder.svg" : imageSrc);
+  const imagePath = imageError ? "/placeholder.svg" : getImagePath(src);
 
   return (
     <div className={cn("relative overflow-hidden bg-muted/20", containerClassName)}>
-      {finalSrc === "/placeholder.svg" ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="text-muted-foreground text-sm">Imagem</span>
+      {imagePath === "/placeholder.svg" && imageError ? (
+        <div className="w-full h-full flex items-center justify-center bg-muted/40">
+          <span className="text-muted-foreground text-sm">Sem imagem</span>
         </div>
       ) : (
         <img
-          src={finalSrc}
+          src={imagePath}
           alt={alt}
-          className={className}
+          className={cn("w-full h-full object-cover", className)}
           loading="lazy"
           decoding="async"
-          onError={handleError}
+          onError={() => setImageError(true)}
         />
       )}
     </div>
