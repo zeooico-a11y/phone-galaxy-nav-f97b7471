@@ -1,5 +1,8 @@
 import { CatalogList } from "@/components/CatalogList";
 import pelicula3D from "@/assets/pelicula-3d.jpg";
+import pelicula11D from "@/assets/pelicula-11d.jpg";
+import peliculaPrivacidade from "@/assets/pelicula-privacidade.jpg";
+import peliculaHidrogel from "@/assets/pelicula-hidrogel.jpg";
 
 const products = [
   {
@@ -21,24 +24,28 @@ const products = [
     description: "Máxima proteção com bordas reforçadas e instalação fácil.",
     color: "Transparente",
     price: "R$ 59",
+    image: pelicula11D,
   },
   {
     name: "Película de Privacidade",
     description: "Protege sua tela de olhares curiosos, anti-espião 360°.",
     color: "Preto",
     price: "R$ 69",
+    image: peliculaPrivacidade,
   },
   {
     name: "Película Hidrogel Frente",
     description: "Película flexível com auto-regeneração de riscos leves.",
     color: "Transparente",
     price: "R$ 39",
+    image: peliculaHidrogel,
   },
   {
     name: "Película Hidrogel Frente + Verso",
     description: "Kit completo de proteção para frente e verso do aparelho.",
     color: "Transparente",
     price: "R$ 69",
+    image: peliculaHidrogel,
   },
 ];
 
