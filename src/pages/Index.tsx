@@ -264,10 +264,9 @@ const Index = () => {
             <img 
               src={heroDestaque} 
               alt="Oferta da semana - Master Phones" 
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center brightness-110 saturate-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
           </div>
 
           {/* Decorative corners */}
@@ -280,9 +279,9 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
           
           <div className="relative flex flex-col items-center gap-4 text-center p-8 sm:p-12 z-20">
-            <div className="mt-2 px-8 py-3 rounded-full bg-primary/30 backdrop-blur-sm border border-primary/50 group-hover:bg-primary/40 transition-all">
-              <p className="text-base sm:text-lg font-semibold text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                6 ofertas imperdíveis • Clique para ver →
+            <div className="mt-2 px-8 py-3 rounded-full bg-background/80 backdrop-blur-md border-2 border-primary/70 group-hover:bg-background/90 group-hover:border-primary transition-all shadow-lg">
+              <p className="text-base sm:text-lg font-bold text-foreground">
+                🔥 6 ofertas imperdíveis • Clique para ver →
               </p>
             </div>
           </div>
