@@ -18,6 +18,7 @@ import CatalogoCapinhas from "./pages/CatalogoCapinhas";
 import CatalogoCarregadores from "./pages/CatalogoCarregadores";
 import CatalogoFones from "./pages/CatalogoFones";
 import CatalogoPowerBank from "./pages/CatalogoPowerBank";
+import CatalogoSmartwatch from "./pages/CatalogoSmartwatch";
 import ServicosAssistencia from "./pages/ServicosAssistencia";
 import NotFound from "./pages/NotFound";
 
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/catalogo-carregadores" element={<CatalogoCarregadores />} />
           <Route path="/catalogo-fones" element={<CatalogoFones />} />
           <Route path="/catalogo-powerbank" element={<CatalogoPowerBank />} />
+          <Route path="/catalogo-smartwatch" element={<CatalogoSmartwatch />} />
           <Route path="/servicos-assistencia" element={<ServicosAssistencia />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
