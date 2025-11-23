@@ -189,16 +189,6 @@ const Index = () => {
               </span>
             )}
           </motion.button>
-
-          <motion.button
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            onClick={() => navigate("/login")}
-            className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
-          >
-            Admin
-          </motion.button>
         </div>
       </header>
 
