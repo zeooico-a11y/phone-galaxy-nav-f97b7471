@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import earthNight from "@/assets/earth-night.jpg";
 
 interface Product {
+  id?: string;
   name: string;
   description: string;
   image?: string;
@@ -76,7 +77,8 @@ export function CatalogList({ title, products, whatsappNumber }: CatalogListProp
         <div className="space-y-6">
           {products.map((product, index) => (
             <ProductCard
-              key={index}
+              key={product.id || index}
+              id={product.id}
               name={product.name}
               description={product.description}
               image={product.image}
