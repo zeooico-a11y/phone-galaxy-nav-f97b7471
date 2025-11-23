@@ -14,7 +14,7 @@ import { TrustSection } from "@/components/TrustSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
-import ofertaIphonesHero from "@/assets/oferta-iphones-hero.jpg";
+import ofertaCapinhasHero from "@/assets/oferta-capinhas-hero.jpg";
 import samsungLogo from "@/assets/samsung-logo.jpeg";
 
 // Custom Xiaomi-style icon
@@ -90,7 +90,7 @@ const Index = () => {
   
   // Buscar imagens do banco de dados
   const { imageUrl: heroBanner } = useSiteImage("hero-banner", earthNight);
-  const { imageUrl: heroDestaque } = useSiteImage("hero-destaque", ofertaIphonesHero);
+  const { imageUrl: heroDestaque } = useSiteImage("hero-destaque", ofertaCapinhasHero);
 
   const handleCategoryClick = (route: string) => {
     navigate(route);
