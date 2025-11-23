@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Apple, Menu, MessageCircle, Package } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductModal } from "@/components/ProductModal";
 import { ProductSidebar } from "@/components/ProductSidebar";
@@ -18,20 +19,20 @@ const XiaomiIcon = ({ className }: { className?: string }) => (
 );
 
 const categories = [
-  { id: "iphone", label: "iPhone", icon: Apple },
-  { id: "samsung", label: "Samsung", icon: MessageCircle },
-  { id: "xiaomi", label: "Xiaomi", icon: XiaomiIcon },
-  { id: "acessorios", label: "Acessórios", icon: Package },
+  { id: "iphone", label: "iPhone", icon: Apple, route: "/catalogo-iphone" },
+  { id: "samsung", label: "Samsung", icon: MessageCircle, route: "/catalogo-samsung" },
+  { id: "xiaomi", label: "Xiaomi", icon: XiaomiIcon, route: "/catalogo-xiaomi" },
+  { id: "acessorios", label: "Acessórios", icon: Package, route: "/catalogo-acessorios" },
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const handleCategoryClick = (categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setModalOpen(true);
+  const handleCategoryClick = (route: string) => {
+    navigate(route);
   };
 
   const handleMenuClick = () => {
@@ -123,7 +124,7 @@ const Index = () => {
                 key={cat.id}
                 icon={cat.icon}
                 label={cat.label}
-                onClick={() => handleCategoryClick(cat.id)}
+                onClick={() => handleCategoryClick(cat.route)}
                 delay={1.1 + index * 0.1}
               />
             ))}
