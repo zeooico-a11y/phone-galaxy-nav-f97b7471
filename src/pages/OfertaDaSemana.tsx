@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, Shield } from "lucide-react";
+import { ArrowLeft, Shield, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -10,78 +12,96 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import earthNight from "@/assets/earth-night.jpg";
-import iphone15ProMax from "@/assets/oferta-iphone-15-pro-max.jpg";
-import iphone14ProMax from "@/assets/oferta-iphone-14-pro-max.jpg";
-import samsungS24Ultra from "@/assets/oferta-samsung-s24-ultra.jpg";
-import samsungS23Ultra from "@/assets/oferta-samsung-s23-ultra.jpg";
-import xiaomi14Pro from "@/assets/oferta-xiaomi-14-pro.jpg";
-import redmiNote13Pro from "@/assets/oferta-redmi-note-13-pro.jpg";
 
-const ofertas = [
-  {
-    id: 1,
-    name: "iPhone 15 Pro Max",
-    originalPrice: "R$ 9.500",
-    promoPrice: "R$ 7.999",
-    storage: "256GB",
-    image: iphone15ProMax,
-  },
-  {
-    id: 2,
-    name: "iPhone 14 Pro Max",
-    originalPrice: "R$ 8.500",
-    promoPrice: "R$ 6.999",
-    storage: "256GB",
-    image: iphone14ProMax,
-  },
-  {
-    id: 3,
-    name: "Galaxy S24 Ultra",
-    originalPrice: "R$ 8.500",
-    promoPrice: "R$ 7.999",
-    storage: "512GB",
-    image: samsungS24Ultra,
-  },
-  {
-    id: 4,
-    name: "Galaxy S23 Ultra",
-    originalPrice: "R$ 7.500",
-    promoPrice: "R$ 6.799",
-    storage: "256GB",
-    image: samsungS23Ultra,
-  },
-  {
-    id: 5,
-    name: "Xiaomi 14 Pro",
-    originalPrice: "R$ 6.500",
-    promoPrice: "R$ 5.799",
-    storage: "512GB",
-    image: xiaomi14Pro,
-  },
-  {
-    id: 6,
-    name: "Redmi Note 13 Pro",
-    originalPrice: "R$ 3.500",
-    promoPrice: "R$ 2.999",
-    storage: "256GB",
-    image: redmiNote13Pro,
-  },
-];
+interface Promotion {
+  id: string;
+  original_price: string | null;
+  promotional_price: string;
+  highlight_text: string | null;
+  products: {
+    name: string;
+    image_url: string | null;
+    color: string | null;
+    storage: string | null;
+    description: string | null;
+  } | null;
+}
 
 export default function OfertaDaSemana() {
   const navigate = useNavigate();
+  const [promotions, setPromotions] = useState<Promotion[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [bannerImage, setBannerImage] = useState<string | null>(null);
 
-  const handleWhatsApp = (oferta: typeof ofertas[0]) => {
-    const economia = (parseFloat(oferta.originalPrice.replace('R$ ', '').replace('.', '')) - 
-                     parseFloat(oferta.promoPrice.replace('R$ ', '').replace('.', ''))).toFixed(0);
+  useEffect(() => {
+    fetchPromotions();
+    fetchBannerImage();
+  }, []);
+
+  const fetchPromotions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("promotions")
+        .select(`
+          id,
+          original_price,
+          promotional_price,
+          highlight_text,
+          products (
+            name,
+            image_url,
+            color,
+            storage,
+            description
+          )
+        `)
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setPromotions(data || []);
+    } catch (error: any) {
+      console.error("Error fetching promotions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchBannerImage = async () => {
+    try {
+      const { data } = await supabase
+        .from("site_images")
+        .select("image_url")
+        .eq("image_key", "oferta-semana-banner")
+        .single();
+
+      if (data?.image_url) {
+        setBannerImage(data.image_url);
+      }
+    } catch (error) {
+      console.error("Error fetching banner:", error);
+    }
+  };
+
+  const handleWhatsApp = (promo: Promotion) => {
+    if (!promo.products) return;
+
+    let economia = "0";
+    if (promo.original_price) {
+      const original = parseFloat(promo.original_price.replace(/[^\d,]/g, '').replace(',', '.'));
+      const promotional = parseFloat(promo.promotional_price.replace(/[^\d,]/g, '').replace(',', '.'));
+      economia = (original - promotional).toFixed(2).replace('.', ',');
+    }
     
     const message = `⭐ *OFERTA DA SEMANA!*\n\n` +
-      `📱 *Produto:* ${oferta.name}\n` +
-      `💾 *Armazenamento:* ${oferta.storage}\n` +
-      `💰 *Preço Normal:* ${oferta.originalPrice}\n` +
-      `✨ *Preço Especial:* ${oferta.promoPrice}\n` +
-      `💵 *Você economiza:* R$ ${economia}\n\n` +
-      `━━━━━━━━━━━━━━━━━\n` +
+      `📱 *Produto:* ${promo.products.name}\n` +
+      `${promo.products.storage ? `💾 *Armazenamento:* ${promo.products.storage}\n` : ''}` +
+      `${promo.products.color ? `🎨 *Cor:* ${promo.products.color}\n` : ''}` +
+      `${promo.original_price ? `💰 *Preço Normal:* ${promo.original_price}\n` : ''}` +
+      `✨ *Preço Especial:* ${promo.promotional_price}\n` +
+      `${promo.original_price ? `💵 *Você economiza:* R$ ${economia}\n` : ''}` +
+      `${promo.highlight_text ? `\n🏷️ ${promo.highlight_text}\n` : ''}` +
+      `\n━━━━━━━━━━━━━━━━━\n` +
       `🎁 *OFERTA VÁLIDA POR TEMPO LIMITADO!*\n\n` +
       `Quero garantir essa oferta!\n` +
       `Por favor, me confirme:\n` +
@@ -94,13 +114,21 @@ export default function OfertaDaSemana() {
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0A0F1C]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <img
-          src={earthNight}
-          alt="Earth at night"
+          src={bannerImage || earthNight}
+          alt="Background"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
@@ -155,84 +183,112 @@ export default function OfertaDaSemana() {
           </div>
 
           {/* Carousel */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="relative px-4 sm:px-12"
-          >
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
+          {promotions.length > 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="relative px-4 sm:px-12"
             >
-              <CarouselContent className="-ml-2 sm:-ml-4">
-                {ofertas.map((oferta, index) => (
-                  <CarouselItem key={oferta.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                      className="group relative flex flex-col gap-4 rounded-2xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-6 transition-all hover:bg-card/60 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
-                    >
-                      {/* Badge */}
-                      <div className="absolute -top-3 -right-3 flex items-center justify-center w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full shadow-glow">
-                        <Shield className="w-5 h-5 text-primary-foreground" />
-                      </div>
-
-                      {/* Product image */}
-                      <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center border border-border/30 overflow-hidden">
-                        <img 
-                          src={oferta.image} 
-                          alt={oferta.name}
-                          className="w-full h-full object-contain p-4"
-                        />
-                      </div>
-
-                      {/* Product info */}
-                      <div className="space-y-3">
-                        <h3 className="text-lg sm:text-xl font-bold text-foreground">
-                          {oferta.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">{oferta.storage}</p>
-                        
-                        <div className="space-y-1">
-                          <p className="text-sm text-muted-foreground line-through">
-                            {oferta.originalPrice}
-                          </p>
-                          <p className="text-3xl font-black text-foreground">
-                            {oferta.promoPrice}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* WhatsApp button */}
-                      <Button
-                        onClick={() => handleWhatsApp(oferta)}
-                        className="w-full bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-full transition-all hover:scale-[0.98]"
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 sm:-ml-4">
+                  {promotions.map((promo, index) => (
+                    <CarouselItem key={promo.id} className="pl-2 sm:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                      <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                        className="group relative flex flex-col gap-4 rounded-2xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-6 transition-all hover:bg-card/60 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
                       >
-                        Pedir no WhatsApp
-                      </Button>
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex -left-6 lg:-left-12 bg-card/60 backdrop-blur-md border-primary/30 hover:bg-card hover:border-primary" />
-              <CarouselNext className="hidden sm:flex -right-6 lg:-right-12 bg-card/60 backdrop-blur-md border-primary/30 hover:bg-card hover:border-primary" />
-            </Carousel>
+                        {/* Badge */}
+                        <div className="absolute -top-3 -right-3 flex items-center justify-center w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full shadow-glow">
+                          <Shield className="w-5 h-5 text-primary-foreground" />
+                        </div>
 
-            {/* Mobile swipe hint */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="mt-6 text-center text-xs text-muted-foreground sm:hidden"
-            >
-              👈 Deslize para ver mais ofertas 👉
-            </motion.p>
-          </motion.div>
+                        {/* Highlight text */}
+                        {promo.highlight_text && (
+                          <div className="absolute -top-2 left-4 px-3 py-1 bg-primary rounded-full">
+                            <span className="text-xs font-bold text-primary-foreground">
+                              {promo.highlight_text}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Product image */}
+                        <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center border border-border/30 overflow-hidden mt-4">
+                          {promo.products?.image_url ? (
+                            <img 
+                              src={promo.products.image_url} 
+                              alt={promo.products.name}
+                              className="w-full h-full object-contain p-4"
+                            />
+                          ) : (
+                            <Shield className="w-24 h-24 text-muted-foreground" />
+                          )}
+                        </div>
+
+                        {/* Product info */}
+                        <div className="space-y-3">
+                          <h3 className="text-lg sm:text-xl font-bold text-foreground">
+                            {promo.products?.name || "Produto"}
+                          </h3>
+                          {promo.products?.storage && (
+                            <p className="text-sm text-muted-foreground">{promo.products.storage}</p>
+                          )}
+                          {promo.products?.color && (
+                            <p className="text-sm text-muted-foreground">Cor: {promo.products.color}</p>
+                          )}
+                          
+                          <div className="space-y-1">
+                            {promo.original_price && (
+                              <p className="text-sm text-muted-foreground line-through">
+                                {promo.original_price}
+                              </p>
+                            )}
+                            <p className="text-3xl font-black text-primary">
+                              {promo.promotional_price}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* WhatsApp button */}
+                        <Button
+                          onClick={() => handleWhatsApp(promo)}
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full transition-all hover:scale-[0.98]"
+                        >
+                          Pedir no WhatsApp
+                        </Button>
+                      </motion.div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden sm:flex -left-6 lg:-left-12 bg-card/60 backdrop-blur-md border-primary/30 hover:bg-card hover:border-primary" />
+                <CarouselNext className="hidden sm:flex -right-6 lg:-right-12 bg-card/60 backdrop-blur-md border-primary/30 hover:bg-card hover:border-primary" />
+              </Carousel>
+
+              {/* Mobile swipe hint */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="mt-6 text-center text-xs text-muted-foreground sm:hidden"
+              >
+                👈 Deslize para ver mais ofertas 👉
+              </motion.p>
+            </motion.div>
+          ) : (
+            <div className="text-center py-12">
+              <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-xl text-foreground">Nenhuma promoção disponível no momento</p>
+              <p className="text-muted-foreground mt-2">Volte em breve para conferir as ofertas!</p>
+            </div>
+          )}
 
           {/* Footer text */}
           <motion.p
