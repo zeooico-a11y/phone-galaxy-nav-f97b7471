@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/AddToCartButton";
 import { MessageCircle } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
+  id?: string;
   name: string;
   description: string;
   image?: string;
@@ -16,6 +18,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ 
+  id,
   name, 
   description, 
   image,
@@ -25,6 +28,7 @@ export function ProductCard({
   whatsappNumber = "5511999999999",
   index = 0 
 }: ProductCardProps) {
+  const navigate = useNavigate();
   const [showButtons, setShowButtons] = useState(false);
 
   // Extrair valor numérico do preço
@@ -42,12 +46,23 @@ export function ProductCard({
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Não navegar se clicar nos botões
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    if (id) {
+      navigate(`/produto/${id}`);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 rounded-2xl sm:rounded-3xl bg-card/50 backdrop-blur-xl border-2 border-border/50 p-5 sm:p-6 lg:p-7 hover:bg-card/70 hover:border-primary/30 hover:shadow-[0_0_20px_rgba(0,163,255,0.2)] transition-all group"
+      onClick={handleCardClick}
+      className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 rounded-2xl sm:rounded-3xl bg-card/50 backdrop-blur-xl border-2 border-border/50 p-5 sm:p-6 lg:p-7 hover:bg-card/70 hover:border-primary/30 hover:shadow-[0_0_20px_rgba(0,163,255,0.2)] transition-all group cursor-pointer"
     >
       {/* Product image */}
       <div className="flex-shrink-0 w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 rounded-xl sm:rounded-2xl bg-muted/20 flex items-center justify-center overflow-hidden border-2 border-border/30">
