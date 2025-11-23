@@ -1,6 +1,10 @@
 import { CatalogList } from "@/components/CatalogList";
 import xiaomi14ProBlack from "@/assets/xiaomi-14-pro-black.jpg";
+import xiaomi14White from "@/assets/xiaomi-14-white.jpg";
+import xiaomi13TProBlack from "@/assets/xiaomi-13t-pro-black.jpg";
 import redmiNote13ProBlue from "@/assets/redmi-note-13-pro-blue.jpg";
+import pocoX6ProYellow from "@/assets/poco-x6-pro-yellow.jpg";
+import redmi12Blue from "@/assets/redmi-12-blue.jpg";
 
 const products = [
   {
@@ -14,9 +18,10 @@ const products = [
   {
     name: "Xiaomi 14",
     description: "Potência flagship em tamanho compacto, com câmera Leica e AMOLED.",
-    color: "Preto",
+    color: "Branco",
     storage: "256GB",
     price: "R$ 4.999",
+    image: xiaomi14White,
   },
   {
     name: "Xiaomi 13T Pro",
@@ -24,6 +29,7 @@ const products = [
     color: "Preto Meia-Noite",
     storage: "256GB",
     price: "R$ 3.999",
+    image: xiaomi13TProBlack,
   },
   {
     name: "Redmi Note 13 Pro",
@@ -36,9 +42,10 @@ const products = [
   {
     name: "Poco X6 Pro",
     description: "Focado em performance gaming, com chip MediaTek Dimensity 8300 Ultra.",
-    color: "Preto",
+    color: "Amarelo",
     storage: "256GB",
     price: "R$ 2.499",
+    image: pocoX6ProYellow,
   },
   {
     name: "Redmi 12",
@@ -46,6 +53,7 @@ const products = [
     color: "Azul Céu",
     storage: "128GB",
     price: "R$ 1.299",
+    image: redmi12Blue,
   },
 ];
 
