@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import earthNight from "@/assets/earth-night.jpg";
 import ofertaCapinhasHero from "@/assets/oferta-capinhas-hero.jpg";
 import samsungLogo from "@/assets/samsung-logo.jpeg";
+import masterPhonesLogo from "@/assets/logo-master-phones.jpeg";
 
 // Custom Xiaomi-style icon
 const XiaomiIcon = ({ className }: { className?: string }) => (
@@ -136,18 +137,33 @@ const Index = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-6">
+      <header className="relative z-10 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-6 gap-4">
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           onClick={handleMenuClick}
-          className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
+          className="p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95 flex-shrink-0"
         >
           <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
         </motion.button>
+
+        {/* Logo retangular central com botão home */}
+        <motion.button
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          onClick={() => navigate("/")}
+          className="flex-1 max-w-md mx-2 sm:mx-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95 overflow-hidden"
+        >
+          <img
+            src={masterPhonesLogo}
+            alt="Master Phones"
+            className="w-full h-12 sm:h-14 md:h-16 object-contain py-2"
+          />
+        </motion.button>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {/* Search */}
           {searchOpen ? (
             <SearchAutocomplete onClose={() => setSearchOpen(false)} />
@@ -176,16 +192,6 @@ const Index = () => {
                 {totalItems}
               </span>
             )}
-          </motion.button>
-
-          <motion.button
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            onClick={() => navigate("/login")}
-            className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
-          >
-            Admin
           </motion.button>
         </div>
       </header>
