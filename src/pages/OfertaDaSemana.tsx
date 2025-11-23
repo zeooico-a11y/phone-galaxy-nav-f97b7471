@@ -155,30 +155,40 @@ export default function OfertaDaSemana() {
           className="space-y-8 sm:space-y-12"
         >
           {/* Title banner */}
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative px-8 sm:px-16 py-4 sm:py-6 rounded-3xl bg-gradient-to-r from-card/60 via-card/80 to-card/60 backdrop-blur-md border-2 border-primary/30 shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+              className="relative px-8 sm:px-20 py-6 sm:py-8 rounded-3xl overflow-hidden"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-black tracking-wider text-center">
-                <span className="bg-gradient-chrome bg-clip-text text-transparent">
-                  OFERTA DA SEMANA
-                </span>
-              </h1>
-              <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary rounded-tl-lg" />
-              <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-primary rounded-tr-lg" />
-              <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-primary rounded-bl-lg" />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary rounded-br-lg" />
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 opacity-90 animate-gradient-x" />
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 via-transparent to-blue-400/30 animate-pulse" />
+              
+              {/* Glowing border */}
+              <div className="absolute inset-0 rounded-3xl border-4 border-white/30 shadow-[0_0_40px_rgba(255,255,255,0.5)]" />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black tracking-wider text-center text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
+                  🔥 OFERTA DA SEMANA 🔥
+                </h1>
+              </div>
+              
+              {/* Corner accents */}
+              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-yellow-300 rounded-tl-2xl animate-pulse" />
+              <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-yellow-300 rounded-tr-2xl animate-pulse" />
+              <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-yellow-300 rounded-bl-2xl animate-pulse" />
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-yellow-300 rounded-br-2xl animate-pulse" />
             </motion.div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-sm sm:text-base text-muted-foreground text-center"
+              className="text-base sm:text-lg font-semibold text-foreground text-center bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent"
             >
-              Promoções exclusivas só pelo WhatsApp
+              ⚡ Promoções exclusivas só pelo WhatsApp ⚡
             </motion.p>
           </div>
 
@@ -204,29 +214,33 @@ export default function OfertaDaSemana() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                        className="group relative flex flex-col gap-4 rounded-2xl bg-card/40 backdrop-blur-md border-2 border-border/50 p-6 transition-all hover:bg-card/60 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                        className="group relative flex flex-col gap-4 rounded-3xl bg-gradient-to-br from-card/60 via-card/80 to-card/60 backdrop-blur-xl border-2 border-orange-500/30 p-6 transition-all hover:border-orange-400/60 hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:scale-[1.02]"
                       >
+                        {/* Animated gradient overlay */}
+                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange-500/5 via-pink-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        
                         {/* Badge */}
-                        <div className="absolute -top-3 -right-3 flex items-center justify-center w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full shadow-glow">
-                          <Shield className="w-5 h-5 text-primary-foreground" />
+                        <div className="absolute -top-3 -right-3 flex items-center justify-center w-12 h-12 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.6)] animate-pulse">
+                          <Shield className="w-6 h-6 text-white" />
                         </div>
 
                         {/* Highlight text */}
                         {promo.highlight_text && (
-                          <div className="absolute -top-2 left-4 px-3 py-1 bg-primary rounded-full">
-                            <span className="text-xs font-bold text-primary-foreground">
+                          <div className="absolute -top-3 left-4 px-4 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-lg">
+                            <span className="text-xs font-bold text-white drop-shadow">
                               {promo.highlight_text}
                             </span>
                           </div>
                         )}
 
                         {/* Product image */}
-                        <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center border border-border/30 overflow-hidden mt-4">
+                        <div className="relative w-full aspect-square rounded-2xl bg-gradient-to-br from-orange-500/10 via-pink-500/10 to-purple-500/10 flex items-center justify-center border-2 border-orange-500/20 overflow-hidden mt-4 group-hover:border-orange-400/40 transition-all">
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
                           {promo.products?.image_url ? (
                             <img 
                               src={promo.products.image_url} 
                               alt={promo.products.name}
-                              className="w-full h-full object-contain p-4"
+                              className="relative z-10 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <Shield className="w-24 h-24 text-muted-foreground" />
@@ -260,9 +274,9 @@ export default function OfertaDaSemana() {
                         {/* WhatsApp button */}
                         <Button
                           onClick={() => handleWhatsApp(promo)}
-                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full transition-all hover:scale-[0.98]"
+                          className="relative z-10 w-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white font-bold rounded-full py-6 shadow-lg shadow-orange-500/50 hover:shadow-xl hover:shadow-orange-500/60 transition-all hover:scale-105"
                         >
-                          Pedir no WhatsApp
+                          🚀 Pedir no WhatsApp
                         </Button>
                       </motion.div>
                     </CarouselItem>
