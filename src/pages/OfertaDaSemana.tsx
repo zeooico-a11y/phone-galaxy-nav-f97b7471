@@ -10,6 +10,12 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import earthNight from "@/assets/earth-night.jpg";
+import iphone15ProMax from "@/assets/oferta-iphone-15-pro-max.jpg";
+import iphone14ProMax from "@/assets/oferta-iphone-14-pro-max.jpg";
+import samsungS24Ultra from "@/assets/oferta-samsung-s24-ultra.jpg";
+import samsungS23Ultra from "@/assets/oferta-samsung-s23-ultra.jpg";
+import xiaomi14Pro from "@/assets/oferta-xiaomi-14-pro.jpg";
+import redmiNote13Pro from "@/assets/oferta-redmi-note-13-pro.jpg";
 
 const ofertas = [
   {
@@ -18,6 +24,7 @@ const ofertas = [
     originalPrice: "R$ 9.500",
     promoPrice: "R$ 7.999",
     storage: "256GB",
+    image: iphone15ProMax,
   },
   {
     id: 2,
@@ -25,6 +32,7 @@ const ofertas = [
     originalPrice: "R$ 8.500",
     promoPrice: "R$ 6.999",
     storage: "256GB",
+    image: iphone14ProMax,
   },
   {
     id: 3,
@@ -32,6 +40,7 @@ const ofertas = [
     originalPrice: "R$ 8.500",
     promoPrice: "R$ 7.999",
     storage: "512GB",
+    image: samsungS24Ultra,
   },
   {
     id: 4,
@@ -39,6 +48,7 @@ const ofertas = [
     originalPrice: "R$ 7.500",
     promoPrice: "R$ 6.799",
     storage: "256GB",
+    image: samsungS23Ultra,
   },
   {
     id: 5,
@@ -46,6 +56,7 @@ const ofertas = [
     originalPrice: "R$ 6.500",
     promoPrice: "R$ 5.799",
     storage: "512GB",
+    image: xiaomi14Pro,
   },
   {
     id: 6,
@@ -53,6 +64,7 @@ const ofertas = [
     originalPrice: "R$ 3.500",
     promoPrice: "R$ 2.999",
     storage: "256GB",
+    image: redmiNote13Pro,
   },
 ];
 
@@ -78,7 +90,7 @@ export default function OfertaDaSemana() {
       `• Prazo de entrega\n` +
       `• Garantia do produto`;
     
-    const phone = "5511999999999";
+    const phone = "5535999366561";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -170,9 +182,13 @@ export default function OfertaDaSemana() {
                         <Shield className="w-5 h-5 text-primary-foreground" />
                       </div>
 
-                      {/* Product image placeholder */}
-                      <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center border border-border/30">
-                        <span className="text-muted-foreground text-sm">Imagem</span>
+                      {/* Product image */}
+                      <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 flex items-center justify-center border border-border/30 overflow-hidden">
+                        <img 
+                          src={oferta.image} 
+                          alt={oferta.name}
+                          className="w-full h-full object-contain p-4"
+                        />
                       </div>
 
                       {/* Product info */}
