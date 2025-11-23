@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSiteImage } from "@/hooks/useSiteImage";
-import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
@@ -371,7 +371,21 @@ const Index = () => {
 
       {/* Footer signature */}
       <footer className="relative z-10 w-full py-6 mt-12">
-        <div className="text-center">
+        <div className="text-center space-y-4">
+          {/* Instagram link */}
+          <motion.a
+            href="https://instagram.com/masterphonesimport"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+          >
+            <Instagram className="w-5 h-5" />
+            <span>@masterphonesimport</span>
+          </motion.a>
+          
           <p className="text-xs sm:text-sm text-muted-foreground/60">
             Feito por <span className="text-primary font-semibold">ZeLoks ilimitado</span>
           </p>
