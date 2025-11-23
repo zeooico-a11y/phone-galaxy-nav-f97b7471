@@ -9,7 +9,7 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
 import { ProductModal } from "@/components/ProductModal";
 import { ProductSidebar } from "@/components/ProductSidebar";
-import { SearchResultsModal } from "@/components/SearchResultsModal";
+import { SearchAutocomplete } from "@/components/SearchAutocomplete";
 import { ActionButtons } from "@/components/ActionButtons";
 import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
@@ -108,10 +108,6 @@ const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [searching, setSearching] = useState(false);
   
   // Buscar imagens do banco de dados
   const { imageUrl: heroBanner } = useSiteImage("hero-banner", earthNight);
@@ -124,47 +120,6 @@ const Index = () => {
   const handleMenuClick = () => {
     setSelectedCategory("all");
     setSidebarOpen(true);
-  };
-
-  const handleSearch = async () => {
-    if (!searchTerm.trim()) {
-      toast.error("Digite algo para buscar");
-      return;
-    }
-
-    setSearching(true);
-    
-    try {
-      const { data, error } = await supabase
-        .from("products")
-        .select(`
-          id,
-          name,
-          description,
-          storage,
-          color,
-          image_url,
-          brand,
-          price_text,
-          categories (
-            name
-          )
-        `)
-        .eq("is_active", true)
-        .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,brand.ilike.%${searchTerm}%,storage.ilike.%${searchTerm}%,color.ilike.%${searchTerm}%`)
-        .order("name");
-
-      if (error) throw error;
-
-      setSearchResults(data || []);
-      setSearchModalOpen(true);
-      setSearchOpen(false);
-    } catch (error: any) {
-      console.error("Erro ao buscar produtos:", error);
-      toast.error("Erro ao buscar produtos");
-    } finally {
-      setSearching(false);
-    }
   };
 
   return (
@@ -195,41 +150,7 @@ const Index = () => {
         <div className="flex items-center gap-2">
           {/* Search */}
           {searchOpen ? (
-            <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "auto", opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-              className="flex items-center gap-2"
-            >
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Buscar produtos..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-9 pr-4 py-2 w-48 sm:w-64 bg-card/60 backdrop-blur-xl border-border/50"
-                  autoFocus
-                  disabled={searching}
-                />
-              </div>
-              <button
-                onClick={handleSearch}
-                disabled={searching}
-                className="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all disabled:opacity-50"
-              >
-                {searching ? "..." : "Buscar"}
-              </button>
-              <button
-                onClick={() => {
-                  setSearchOpen(false);
-                  setSearchTerm("");
-                }}
-                className="p-2 rounded-xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all"
-              >
-                <X className="w-4 h-4 text-foreground" />
-              </button>
-            </motion.div>
+            <SearchAutocomplete onClose={() => setSearchOpen(false)} />
           ) : (
             <motion.button
               initial={{ opacity: 0, x: 20 }}
@@ -443,13 +364,6 @@ const Index = () => {
         selectedCategory={selectedCategory}
       />
 
-      {/* Search results modal */}
-      <SearchResultsModal
-        open={searchModalOpen}
-        onOpenChange={setSearchModalOpen}
-        results={searchResults}
-        searchTerm={searchTerm}
-      />
 
       {/* WhatsApp floating button */}
       <WhatsAppButton />
