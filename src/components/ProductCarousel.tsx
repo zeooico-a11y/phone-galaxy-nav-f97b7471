@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -19,16 +18,13 @@ export function ProductCarousel() {
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
   
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { 
-      loop: true,
-      align: "start",
-      skipSnaps: false,
-      dragFree: false,
-      containScroll: "trimSnaps"
-    },
-    [Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    skipSnaps: false,
+    dragFree: false,
+    containScroll: "trimSnaps"
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,14 +32,16 @@ export function ProductCarousel() {
         .from("products")
         .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
+        .not("image_url", "is", null)
         .limit(15);
       
       if (data) {
-        // Ordenar localmente por preço (extraindo número do price_text se price for null)
-        const sortedProducts = [...data].sort((a, b) => {
+        // Filtrar produtos com imagens válidas e ordenar por preço
+        const validProducts = data.filter(p => p.image_url && p.image_url.trim() !== '');
+        const sortedProducts = [...validProducts].sort((a, b) => {
           const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
           const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-          return priceB - priceA; // Ordem decrescente
+          return priceB - priceA;
         });
         setProducts(sortedProducts);
       }
