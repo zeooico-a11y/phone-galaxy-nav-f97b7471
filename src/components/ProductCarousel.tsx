@@ -45,8 +45,7 @@ export function ProductCarousel() {
         .from("products")
         .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
-        .not("image_url", "is", null)
-        .limit(50);
+        .not("image_url", "is", null);
       
       if (data) {
         // Filtrar produtos excluídos e sem imagens válidas
@@ -56,14 +55,12 @@ export function ProductCarousel() {
           !excludedProducts.includes(p.name)
         );
         
-        // Ordenar por preço e limitar a 15 produtos
-        const sortedProducts = [...validProducts]
-          .sort((a, b) => {
-            const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-            const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-            return priceB - priceA;
-          })
-          .slice(0, 15);
+        // Ordenar por preço em ordem decrescente
+        const sortedProducts = [...validProducts].sort((a, b) => {
+          const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+          const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+          return priceB - priceA;
+        });
           
         setProducts(sortedProducts);
       }
