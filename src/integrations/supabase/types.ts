@@ -50,6 +50,48 @@ export type Database = {
         }
         Relationships: []
       }
+      coupons: {
+        Row: {
+          code: string
+          created_at: string
+          current_uses: number | null
+          discount_type: string
+          discount_value: number
+          expires_at: string | null
+          id: string
+          is_active: boolean | null
+          max_uses: number | null
+          min_purchase_amount: number | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          current_uses?: number | null
+          discount_type: string
+          discount_value: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          max_uses?: number | null
+          min_purchase_amount?: number | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          current_uses?: number | null
+          discount_type?: string
+          discount_value?: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          max_uses?: number | null
+          min_purchase_amount?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faq: {
         Row: {
           answer: string
@@ -142,12 +184,15 @@ export type Database = {
           customer_state: string | null
           customer_zipcode: string | null
           delivery_type: string
+          estimated_delivery_date: string | null
           id: string
           notes: string | null
           payment_method: string
           status: string
           total_amount: number
+          tracking_code: string | null
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -159,12 +204,15 @@ export type Database = {
           customer_state?: string | null
           customer_zipcode?: string | null
           delivery_type: string
+          estimated_delivery_date?: string | null
           id?: string
           notes?: string | null
           payment_method: string
           status?: string
           total_amount: number
+          tracking_code?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -176,14 +224,61 @@ export type Database = {
           customer_state?: string | null
           customer_zipcode?: string | null
           delivery_type?: string
+          estimated_delivery_date?: string | null
           id?: string
           notes?: string | null
           payment_method?: string
           status?: string
           total_amount?: number
+          tracking_code?: string | null
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
+      }
+      product_questions: {
+        Row: {
+          answer: string | null
+          answered_at: string | null
+          created_at: string
+          customer_name: string
+          id: string
+          is_active: boolean | null
+          product_id: string
+          question: string
+          user_id: string | null
+        }
+        Insert: {
+          answer?: string | null
+          answered_at?: string | null
+          created_at?: string
+          customer_name: string
+          id?: string
+          is_active?: boolean | null
+          product_id: string
+          question: string
+          user_id?: string | null
+        }
+        Update: {
+          answer?: string | null
+          answered_at?: string | null
+          created_at?: string
+          customer_name?: string
+          id?: string
+          is_active?: boolean | null
+          product_id?: string
+          question?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_questions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {
@@ -198,6 +293,7 @@ export type Database = {
           is_active: boolean | null
           is_featured: boolean | null
           name: string
+          price: number | null
           price_text: string | null
           product_type: string | null
           storage: string | null
@@ -215,6 +311,7 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           name: string
+          price?: number | null
           price_text?: string | null
           product_type?: string | null
           storage?: string | null
@@ -232,6 +329,7 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           name?: string
+          price?: number | null
           price_text?: string | null
           product_type?: string | null
           storage?: string | null
@@ -246,6 +344,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          city: string | null
+          cpf: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          state: string | null
+          updated_at: string
+          zipcode: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          cpf?: string | null
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          zipcode?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          cpf?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          state?: string | null
+          updated_at?: string
+          zipcode?: string | null
+        }
+        Relationships: []
       }
       promotions: {
         Row: {
@@ -284,6 +424,53 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "promotions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          created_at: string
+          customer_name: string
+          id: string
+          is_active: boolean | null
+          is_approved: boolean | null
+          product_id: string
+          rating: number
+          review_text: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          product_id: string
+          rating: number
+          review_text: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          id?: string
+          is_active?: boolean | null
+          is_approved?: boolean | null
+          product_id?: string
+          rating?: number
+          review_text?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"

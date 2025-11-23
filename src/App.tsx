@@ -24,6 +24,10 @@ import ServicosAssistencia from "./pages/ServicosAssistencia";
 import Carrinho from "./pages/Carrinho";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/admin/Orders";
+import ProductDetail from "./pages/ProductDetail";
+import CatalogoDinamico from "./pages/CatalogoDinamico";
+import Coupons from "./pages/admin/Coupons";
+import Reviews from "./pages/admin/Reviews";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
@@ -65,6 +69,8 @@ const App = () => (
           <Route path="/servicos-assistencia" element={<ServicosAssistencia />} />
           <Route path="/carrinho" element={<Carrinho />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/produto/:id" element={<ProductDetail />} />
+          <Route path="/catalogo/:categorySlug" element={<CatalogoDinamico />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/sections" element={<Sections />} />
@@ -75,6 +81,8 @@ const App = () => (
           <Route path="/admin/site-images" element={<SiteImages />} />
           <Route path="/admin/faq" element={<FAQPage />} />
           <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/coupons" element={<Coupons />} />
+          <Route path="/admin/reviews" element={<Reviews />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
