@@ -8,6 +8,8 @@ import { ProductSidebar } from "@/components/ProductSidebar";
 import { ActionButtons } from "@/components/ActionButtons";
 import { DeliverySteps } from "@/components/DeliverySteps";
 import { LocationSection } from "@/components/LocationSection";
+import { TrustSection } from "@/components/TrustSection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import earthNight from "@/assets/earth-night.jpg";
 import ofertaSemanaHero from "@/assets/oferta-semana-hero.jpg";
@@ -189,6 +191,12 @@ const Index = () => {
 
       {/* Location section */}
       <LocationSection />
+
+      {/* Trust section */}
+      <TrustSection />
+
+      {/* Testimonials section */}
+      <TestimonialsSection />
 
       {/* Product modal */}
       <ProductModal
