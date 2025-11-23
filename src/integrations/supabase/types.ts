@@ -14,9 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          icon_name: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          order_position: number | null
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          order_position?: number | null
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          order_position?: number | null
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      faq: {
+        Row: {
+          answer: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          order_position: number | null
+          question: string
+          updated_at: string | null
+        }
+        Insert: {
+          answer: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          order_position?: number | null
+          question: string
+          updated_at?: string | null
+        }
+        Update: {
+          answer?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          order_position?: number | null
+          question?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       products: {
         Row: {
+          brand: string | null
+          category_id: string | null
           color: string | null
+          compatibility: string | null
           created_at: string | null
           description: string | null
           id: string
@@ -24,11 +93,16 @@ export type Database = {
           is_active: boolean | null
           is_featured: boolean | null
           name: string
+          price_text: string | null
+          product_type: string | null
           storage: string | null
           updated_at: string | null
         }
         Insert: {
+          brand?: string | null
+          category_id?: string | null
           color?: string | null
+          compatibility?: string | null
           created_at?: string | null
           description?: string | null
           id?: string
@@ -36,11 +110,16 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           name: string
+          price_text?: string | null
+          product_type?: string | null
           storage?: string | null
           updated_at?: string | null
         }
         Update: {
+          brand?: string | null
+          category_id?: string | null
           color?: string | null
+          compatibility?: string | null
           created_at?: string | null
           description?: string | null
           id?: string
@@ -48,7 +127,88 @@ export type Database = {
           is_active?: boolean | null
           is_featured?: boolean | null
           name?: string
+          price_text?: string | null
+          product_type?: string | null
           storage?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      promotions: {
+        Row: {
+          created_at: string | null
+          highlight_text: string | null
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          original_price: string | null
+          product_id: string | null
+          promotional_price: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          highlight_text?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          original_price?: string | null
+          product_id?: string | null
+          promotional_price: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          highlight_text?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          original_price?: string | null
+          product_id?: string | null
+          promotional_price?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promotions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_images: {
+        Row: {
+          description: string | null
+          id: string
+          image_key: string
+          image_url: string
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          image_key: string
+          image_url: string
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          image_key?: string
+          image_url?: string
+          title?: string | null
           updated_at?: string | null
         }
         Relationships: []

@@ -27,6 +27,10 @@ import Sections from "./pages/admin/Sections";
 import Products from "./pages/admin/Products";
 import Testimonials from "./pages/admin/Testimonials";
 import AdminSettings from "./pages/admin/Settings";
+import Categories from "./pages/admin/Categories";
+import Promotions from "./pages/admin/Promotions";
+import SiteImages from "./pages/admin/SiteImages";
+import FAQPage from "./pages/admin/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -58,7 +62,11 @@ const App = () => (
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/sections" element={<Sections />} />
           <Route path="/admin/products" element={<Products />} />
+          <Route path="/admin/categories" element={<Categories />} />
+          <Route path="/admin/promotions" element={<Promotions />} />
           <Route path="/admin/testimonials" element={<Testimonials />} />
+          <Route path="/admin/site-images" element={<SiteImages />} />
+          <Route path="/admin/faq" element={<FAQPage />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
