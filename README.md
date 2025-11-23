@@ -1,5 +1,7 @@
 # Welcome to your Lovable project
 
+<!-- Teste de sincronização GitHub - 2025-01-23 -->
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/9d47676c-a4f9-44b7-963f-3d8bd79d7337
