@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSiteImage } from "@/hooks/useSiteImage";
 import { supabase } from "@/integrations/supabase/client";
-import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch, Search, X, Instagram, ShoppingCart } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
@@ -102,6 +103,7 @@ interface Product {
 
 const Index = () => {
   const navigate = useNavigate();
+  const { totalItems } = useCart();
   const [modalOpen, setModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -243,7 +245,22 @@ const Index = () => {
           <motion.button
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            onClick={() => navigate("/carrinho")}
+            className="relative p-3 sm:p-4 rounded-2xl bg-card/60 backdrop-blur-xl border border-border/50 hover:bg-card/80 hover:border-primary/50 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] active:scale-95"
+          >
+            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </motion.button>
+
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             onClick={() => navigate("/login")}
             className="px-5 py-2.5 sm:px-6 sm:py-3 rounded-2xl bg-primary/20 backdrop-blur-xl border border-primary/50 hover:bg-primary/30 transition-all hover:shadow-[0_0_20px_rgba(0,163,255,0.3)] text-primary text-sm sm:text-base font-semibold active:scale-95"
           >

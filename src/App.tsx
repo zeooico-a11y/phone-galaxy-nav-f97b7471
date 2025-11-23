@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
 import QuemSomos from "./pages/QuemSomos";
 import AgendamentoReparo from "./pages/AgendamentoReparo";
@@ -20,6 +21,9 @@ import CatalogoFones from "./pages/CatalogoFones";
 import CatalogoPowerBank from "./pages/CatalogoPowerBank";
 import CatalogoSmartwatch from "./pages/CatalogoSmartwatch";
 import ServicosAssistencia from "./pages/ServicosAssistencia";
+import Carrinho from "./pages/Carrinho";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/admin/Orders";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
@@ -37,10 +41,11 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
+      <CartProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/quem-somos" element={<QuemSomos />} />
           <Route path="/agendamento-reparo" element={<AgendamentoReparo />} />
@@ -58,6 +63,8 @@ const App = () => (
           <Route path="/catalogo-powerbank" element={<CatalogoPowerBank />} />
           <Route path="/catalogo-smartwatch" element={<CatalogoSmartwatch />} />
           <Route path="/servicos-assistencia" element={<ServicosAssistencia />} />
+          <Route path="/carrinho" element={<Carrinho />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/sections" element={<Sections />} />
@@ -67,11 +74,13 @@ const App = () => (
           <Route path="/admin/testimonials" element={<Testimonials />} />
           <Route path="/admin/site-images" element={<SiteImages />} />
           <Route path="/admin/faq" element={<FAQPage />} />
+          <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

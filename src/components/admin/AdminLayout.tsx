@@ -15,7 +15,8 @@ import {
   X,
   Tag,
   Image,
-  HelpCircle
+  HelpCircle,
+  ShoppingBag
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -73,6 +74,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
+    { icon: ShoppingBag, label: "Pedidos", path: "/admin/orders" },
     { icon: Package, label: "Catálogo - Produtos", path: "/admin/products" },
     { icon: Tag, label: "Promoções / Ofertas", path: "/admin/promotions" },
     { icon: MessageSquare, label: "Depoimentos", path: "/admin/testimonials" },
