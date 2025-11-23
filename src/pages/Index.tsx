@@ -69,12 +69,6 @@ const accessoryCategories = [
     icon: Battery,
     route: "/catalogo-powerbank" 
   },
-  { 
-    title: "Serviços & Assistência", 
-    description: "Serviços de assistência técnica e suporte especializado",
-    icon: Wrench,
-    route: "/servicos-assistencia" 
-  },
 ];
 
 const Index = () => {

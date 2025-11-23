@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const actions = [
   { id: "quem-somos", label: "Quem somos nós", icon: Users, route: "/quem-somos" },
-  { id: "agendamento", label: "Agendamento de reparo", icon: Wrench, route: "/agendamento-reparo" },
+  { id: "assistencia", label: "Assistência Técnica", icon: Wrench, route: "/servicos-assistencia" },
   { id: "ofertas", label: "Ofertas do dia", icon: Tag, route: "/ofertas-do-dia" },
   { id: "faq", label: "Perguntas frequentes", icon: HelpCircle, route: "/perguntas-frequentes" },
 ];
