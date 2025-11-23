@@ -26,6 +26,8 @@ const categories = [
   { id: "iphone", label: "iPhone", icon: Apple, route: "/catalogo-iphone" },
   { id: "samsung", label: "Samsung", icon: MessageCircle, route: "/catalogo-samsung" },
   { id: "xiaomi", label: "Xiaomi", icon: XiaomiIcon, route: "/catalogo-xiaomi" },
+  { id: "peliculas", label: "Películas", icon: Shield, route: "/catalogo-peliculas" },
+  { id: "capinhas", label: "Capinhas", icon: Smartphone, route: "/catalogo-capinhas" },
   { id: "acessorios", label: "Acessórios", icon: Package, route: "/catalogo-acessorios" },
 ];
 
@@ -160,8 +162,8 @@ const Index = () => {
         <ActionButtons />
 
         {/* Category cards */}
-        <div className="w-full max-w-2xl px-2 sm:px-4 space-y-6 mb-16">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div className="w-full max-w-3xl px-2 sm:px-4 space-y-6 mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             {categories.map((cat, index) => (
               <CategoryCard
                 key={cat.id}
