@@ -35,10 +35,17 @@ export function ProductCarousel() {
         .from("products")
         .select("id, name, image_url, price_text, price")
         .eq("is_active", true)
-        .order("price", { ascending: false, nullsFirst: false })
         .limit(15);
       
-      if (data) setProducts(data);
+      if (data) {
+        // Ordenar localmente por preço (extraindo número do price_text se price for null)
+        const sortedProducts = [...data].sort((a, b) => {
+          const priceA = a.price || parseFloat(a.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+          const priceB = b.price || parseFloat(b.price_text?.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+          return priceB - priceA; // Ordem decrescente
+        });
+        setProducts(sortedProducts);
+      }
     };
 
     fetchProducts();
@@ -99,11 +106,20 @@ export function ProductCarousel() {
               <div className="aspect-square mb-4 rounded-xl bg-muted/20 overflow-hidden border border-border/30">
                 {product.image_url ? (
                   <img
-                    src={product.image_url}
+                    src={product.image_url.startsWith('/src/') 
+                      ? product.image_url.replace('/src/assets/', '/assets/') 
+                      : product.image_url}
                     alt={product.name}
                     className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                     decoding="async"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (!img.dataset.retried) {
+                        img.dataset.retried = 'true';
+                        img.src = product.image_url.replace('/assets/', '/src/assets/');
+                      }
+                    }}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
