@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface AddToCartButtonProps {
   productId: string;
@@ -12,6 +13,8 @@ interface AddToCartButtonProps {
   productColor?: string;
   productStorage?: string;
   className?: string;
+  redirectToCheckout?: boolean;
+  variant?: "default" | "outline" | "secondary";
 }
 
 export function AddToCartButton({
@@ -23,6 +26,8 @@ export function AddToCartButton({
   productColor,
   productStorage,
   className,
+  redirectToCheckout = false,
+  variant = "default",
 }: AddToCartButtonProps) {
   const { addItem } = useCart();
   const navigate = useNavigate();
@@ -37,13 +42,18 @@ export function AddToCartButton({
       color: productColor,
       storage: productStorage,
     });
-    navigate("/checkout");
+    
+    if (redirectToCheckout) {
+      navigate("/checkout");
+    } else {
+      toast.success("Produto adicionado ao carrinho!");
+    }
   };
 
   return (
-    <Button onClick={handleAddToCart} className={className}>
+    <Button onClick={handleAddToCart} variant={variant} className={className}>
       <ShoppingCart className="w-4 h-4 mr-2" />
-      Comprar pelo WhatsApp
+      {redirectToCheckout ? "Comprar pelo WhatsApp" : "Adicionar ao Carrinho"}
     </Button>
   );
 }
