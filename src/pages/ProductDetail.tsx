@@ -223,16 +223,30 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <AddToCartButton
-              productId={product.id}
-              productName={product.name}
-              productPrice={product.price || 0}
-              productPriceText={product.price_text || ""}
-              productImage={product.image_url}
-              productColor={product.color}
-              productStorage={product.storage}
-              className="w-full h-14 text-lg"
-            />
+            <div className="space-y-3">
+              <AddToCartButton
+                productId={product.id}
+                productName={product.name}
+                productPrice={product.price || 0}
+                productPriceText={product.price_text || ""}
+                productImage={product.image_url}
+                productColor={product.color}
+                productStorage={product.storage}
+                className="w-full h-14 text-lg"
+              />
+              <AddToCartButton
+                productId={product.id}
+                productName={product.name}
+                productPrice={product.price || 0}
+                productPriceText={product.price_text || ""}
+                productImage={product.image_url}
+                productColor={product.color}
+                productStorage={product.storage}
+                redirectToCheckout={true}
+                variant="secondary"
+                className="w-full h-14 text-lg"
+              />
+            </div>
           </motion.div>
         </div>
 
