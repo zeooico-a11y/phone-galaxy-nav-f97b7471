@@ -41,7 +41,16 @@ export default function ServicosAssistencia() {
   const navigate = useNavigate();
 
   const handleWhatsApp = (service: typeof services[0]) => {
-    const message = `Oi, vim do app Master Phones e quero agendar o serviço: ${service.name}`;
+    const message = `🔧 *AGENDAMENTO DE ASSISTÊNCIA TÉCNICA*\n\n` +
+      `📋 *Serviço desejado:* ${service.name}\n` +
+      `📝 *Descrição:* ${service.description}\n` +
+      `ℹ️ *Detalhes:* ${service.details}\n\n` +
+      `Gostaria de agendar este serviço.\n` +
+      `Por favor, me informe:\n` +
+      `• Disponibilidade de horários\n` +
+      `• Valor do serviço\n` +
+      `• Prazo estimado\n` +
+      `• Forma de pagamento`;
     window.open(`https://wa.me/5511999999999?text=${encodeURIComponent(message)}`, "_blank");
   };
 

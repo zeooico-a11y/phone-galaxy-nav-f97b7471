@@ -3,8 +3,14 @@ import { motion } from "framer-motion";
 
 export function WhatsAppButton() {
   const handleClick = () => {
-    const phone = "5511999999999"; // Substituir pelo número real
-    const message = "Oi! Vim do app Master Phones e gostaria de mais informações.";
+    const phone = "5511999999999";
+    const message = `👋 Olá! Vim do app *Master Phones Importados*.\n\n` +
+      `Gostaria de tirar algumas dúvidas sobre:\n` +
+      `• Produtos disponíveis\n` +
+      `• Formas de pagamento\n` +
+      `• Prazos de entrega\n` +
+      `• Garantia\n\n` +
+      `Pode me ajudar? 😊`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
 

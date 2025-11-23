@@ -23,10 +23,14 @@ export function ProductCard({
   index = 0 
 }: ProductCardProps) {
   const handleWhatsApp = () => {
-    let message = `Oi, vim do app Master Phones e quero o ${name}`;
-    if (color) message += ` na cor ${color}`;
-    if (storage) message += ` ${storage}`;
-    message += ".";
+    let message = `🛒 *PEDIDO DE PRODUTO*\n\n`;
+    message += `📱 *Produto:* ${name}\n`;
+    if (color) message += `🎨 *Cor:* ${color}\n`;
+    if (storage) message += `💾 *Armazenamento:* ${storage}\n`;
+    if (price) message += `💰 *Preço:* ${price}\n`;
+    message += `\n📝 *Descrição:* ${description}\n`;
+    message += `\n✅ Gostaria de saber mais informações sobre disponibilidade, formas de pagamento e prazo de entrega.`;
+    
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
   };
 

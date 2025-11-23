@@ -43,8 +43,26 @@ export default function OfertasDoDia() {
   const navigate = useNavigate();
 
   const handleWhatsApp = (oferta: typeof ofertas[0]) => {
-    const message = `Oi! Vi a oferta do ${oferta.name} ${oferta.storage} por ${oferta.discountPrice} (${oferta.discount}). Quero saber mais!`;
-    const phone = "5511999999999"; // Substituir pelo número real
+    const discount = ((parseFloat(oferta.originalPrice.replace('R$ ', '').replace('.', '')) - 
+                      parseFloat(oferta.discountPrice.replace('R$ ', '').replace('.', ''))) / 
+                      parseFloat(oferta.originalPrice.replace('R$ ', '').replace('.', '')) * 100).toFixed(0);
+    
+    const message = `🔥 *OFERTA DO DIA!*\n\n` +
+      `📱 *Produto:* ${oferta.name}\n` +
+      `💾 *Armazenamento:* ${oferta.storage}\n` +
+      `💰 *Preço Normal:* ${oferta.originalPrice}\n` +
+      `✨ *Preço Promocional:* ${oferta.discountPrice}\n` +
+      `🎯 *Desconto:* ${oferta.discount}\n\n` +
+      `━━━━━━━━━━━━━━━━━\n` +
+      `⚡ *OFERTA VÁLIDA APENAS HOJE!*\n\n` +
+      `Quero aproveitar esta promoção!\n` +
+      `Por favor, me informe:\n` +
+      `• Disponibilidade em estoque\n` +
+      `• Formas de pagamento\n` +
+      `• Prazo de entrega para minha região\n` +
+      `• Garantia do produto`;
+    
+    const phone = "5511999999999";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
 
