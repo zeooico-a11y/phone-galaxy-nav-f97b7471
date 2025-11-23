@@ -4,14 +4,8 @@ import { Button } from "@/components/ui/button";
 import brazilMap from "@/assets/brazil-map.jpg";
 
 export function LocationSection() {
-  const handleWhatsAppParaguacu = () => {
-    const phone = "5511999999999"; // Substituir pelo número real de Paraguaçu
-    const message = "Oi, sou de Paraguaçu e vim do app Master Phones";
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-  };
-
   const handleWhatsAppPocoFundo = () => {
-    const phone = "5511999999999"; // Substituir pelo número real de Poço Fundo
+    const phone = "5535999366561";
     const message = "Oi, sou de Poço Fundo e vim do app Master Phones";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   };
@@ -33,7 +27,7 @@ export function LocationSection() {
             </span>
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground">
-            Atendimento especializado para a região de Paraguaçu e Poço Fundo (MG)
+            Atendimento especializado em Poço Fundo (MG)
           </p>
         </motion.div>
 
@@ -47,7 +41,7 @@ export function LocationSection() {
         >
           <img
             src={brazilMap}
-            alt="Mapa do Brasil - Área de atendimento Paraguaçu e Poço Fundo"
+            alt="Mapa do Brasil - Área de atendimento Poço Fundo"
             className="w-full h-auto object-cover"
           />
         </motion.div>
@@ -61,30 +55,22 @@ export function LocationSection() {
           className="text-center mb-8 space-y-3 max-w-3xl mx-auto"
         >
           <p className="text-base text-foreground leading-relaxed">
-            Nossa base de atendimento está localizada no Sul de Minas, com foco nas cidades de 
-            Paraguaçu e Poço Fundo, oferecendo entrega rápida e suporte dedicado para toda a região.
+            Nossa base de atendimento está localizada no Sul de Minas, em Poço Fundo, 
+            oferecendo entrega rápida e suporte dedicado para toda a região.
           </p>
           <p className="text-sm text-muted-foreground">
             Consulte nossa equipe para saber prazos e condições de envio para outras cidades.
           </p>
         </motion.div>
 
-        {/* WhatsApp buttons */}
+        {/* WhatsApp button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
+          className="flex justify-center items-center mb-6"
         >
-          <Button
-            onClick={handleWhatsAppParaguacu}
-            className="w-full sm:w-auto gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white px-8 py-6 text-base"
-          >
-            <MapPin className="w-5 h-5" />
-            Falar com atendimento Paraguaçu
-          </Button>
-
           <Button
             onClick={handleWhatsAppPocoFundo}
             className="w-full sm:w-auto gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white px-8 py-6 text-base"
