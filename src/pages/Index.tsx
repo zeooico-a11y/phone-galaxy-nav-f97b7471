@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench } from "lucide-react";
+import { Apple, Menu, Package, Shield, Smartphone, Zap, Headphones, Battery, Wrench, Watch } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CategoryListCard } from "@/components/CategoryListCard";
@@ -43,6 +43,12 @@ const categories = [
 ];
 
 const accessoryCategories = [
+  { 
+    title: "Smartwatch · Relógios Inteligentes", 
+    description: "Apple Watch, Galaxy Watch, Xiaomi Band e mais smartwatches premium",
+    icon: Watch,
+    route: "/catalogo-smartwatch" 
+  },
   { 
     title: "Películas & Proteção de Tela", 
     description: "Películas 3D, privacidade e hidrogel para todas as marcas",

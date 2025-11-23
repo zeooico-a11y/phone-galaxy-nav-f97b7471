@@ -28,6 +28,11 @@ const phoneCategories = [
     route: "/catalogo-xiaomi",
   },
   {
+    id: "smartwatch",
+    brand: "Smartwatch · Relógios Inteligentes",
+    route: "/catalogo-smartwatch",
+  },
+  {
     id: "acessorios",
     brand: "Acessórios",
     route: "/catalogo-acessorios",
